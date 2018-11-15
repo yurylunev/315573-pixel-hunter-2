@@ -49,12 +49,13 @@ arrows.innerHTML = `<style>
   </style>
   <button class="arrows__btn"><-</button>
   <button class="arrows__btn">-></button>`;
-document.body.appendChild(arrows);
 
-const arrowButtons = document.querySelectorAll(`button.arrows__btn`);
+const arrowButtons = arrows.querySelectorAll(`button.arrows__btn`);
 arrowButtons[0].addEventListener(`click`, () => {
   showScreen(currentScreen - 1);
 });
 arrowButtons[1].addEventListener(`click`, () => {
   showScreen(currentScreen + 1);
 });
+
+document.body.appendChild(arrows);
