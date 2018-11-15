@@ -11,8 +11,7 @@ const wrap = (it) => {
   return shadow.cloneNode(true);
 };
 
-const showScreen = (screenNumber) => {
-  const nextScreen = Math.min(screens.length - 1, Math.max(0, screenNumber));
+const showScreen = (nextScreen) => {
   if (currentScreen !== nextScreen) {
     rootElement.innerHTML = ``;
     rootElement.appendChild(wrap(screens[nextScreen]));
@@ -25,10 +24,10 @@ showScreen(0);
 document.addEventListener(`keyup`, (event) => {
   switch (event.key) {
     case `ArrowRight`:
-      showScreen(currentScreen + 1);
+      showScreen(Math.min(screens.length - 1, Math.max(0, currentScreen + 1)));
       break;
     case `ArrowLeft`:
-      showScreen(currentScreen - 1);
+      showScreen(Math.min(screens.length - 1, Math.max(0, currentScreen - 1)));
       break;
   }
 });
