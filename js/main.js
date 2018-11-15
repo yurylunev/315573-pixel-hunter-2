@@ -11,11 +11,14 @@ const wrap = (it) => {
   return shadow.cloneNode(true);
 };
 
-const showScreen = (nextScreen) => {
-  if (currentScreen !== nextScreen) {
+const nextScreen = () => Math.min(screens.length - 1, Math.max(0, currentScreen + 1));
+const previousScreen = () => Math.min(screens.length - 1, Math.max(0, currentScreen - 1));
+
+const showScreen = (screenNumber) => {
+  if (currentScreen !== screenNumber) {
     rootElement.innerHTML = ``;
-    rootElement.appendChild(wrap(screens[nextScreen]));
-    currentScreen = nextScreen;
+    rootElement.appendChild(wrap(screens[screenNumber]));
+    currentScreen = screenNumber;
   }
 };
 
@@ -24,10 +27,10 @@ showScreen(0);
 document.addEventListener(`keyup`, (event) => {
   switch (event.key) {
     case `ArrowRight`:
-      showScreen(Math.min(screens.length - 1, Math.max(0, currentScreen + 1)));
+      showScreen(nextScreen());
       break;
     case `ArrowLeft`:
-      showScreen(Math.min(screens.length - 1, Math.max(0, currentScreen - 1)));
+      showScreen(previousScreen());
       break;
   }
 });
@@ -52,10 +55,10 @@ arrows.innerHTML = `<style>
 
 const arrowButtons = arrows.querySelectorAll(`button.arrows__btn`);
 arrowButtons[0].addEventListener(`click`, () => {
-  showScreen(currentScreen - 1);
+  showScreen(nextScreen());
 });
 arrowButtons[1].addEventListener(`click`, () => {
-  showScreen(currentScreen + 1);
+  showScreen(previousScreen());
 });
 
 document.body.appendChild(arrows);
