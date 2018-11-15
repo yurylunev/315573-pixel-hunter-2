@@ -12,15 +12,11 @@ const wrap = (it) => {
 };
 
 const showScreen = (screenNumber) => {
-  if (currentScreen === -1) {
+  const nextScreen = Math.min(screens.length - 1, Math.max(0, screenNumber));
+  if (currentScreen !== nextScreen) {
     rootElement.innerHTML = ``;
-    rootElement.appendChild(wrap(screens[screenNumber]));
-    currentScreen = 0;
-  }
-  if (currentScreen !== screenNumber) {
-    currentScreen = Math.min(screens.length - 1, Math.max(0, screenNumber));
-    rootElement.innerHTML = ``;
-    rootElement.appendChild(wrap(screens[currentScreen]));
+    rootElement.appendChild(wrap(screens[nextScreen]));
+    currentScreen = nextScreen;
   }
 };
 
