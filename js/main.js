@@ -2,7 +2,7 @@
 const screens = [`intro`, `greeting`, `rules`, `game-1`, `game-2`, `game-3`, `stats`]
   .map((screenName) => document.querySelector(`template#${screenName}`));
 const rootElement = document.querySelector(`#main`);
-let currentScreen;
+let currentScreen = -1;
 
 const wrap = (it) => {
   const shadow = document.createElement(`div`);
@@ -11,7 +11,12 @@ const wrap = (it) => {
   return shadow.cloneNode(true);
 };
 
-const showScreen = (screenNumber = 0) => {
+const showScreen = (screenNumber) => {
+  if (currentScreen === -1) {
+    rootElement.innerHTML = ``;
+    rootElement.appendChild(wrap(screens[screenNumber]));
+    currentScreen = 0;
+  }
   if (currentScreen !== screenNumber) {
     currentScreen = Math.min(screens.length - 1, Math.max(0, screenNumber));
     rootElement.innerHTML = ``;
@@ -19,7 +24,7 @@ const showScreen = (screenNumber = 0) => {
   }
 };
 
-showScreen();
+showScreen(0);
 
 document.addEventListener(`keyup`, (event) => {
   switch (event.key) {
