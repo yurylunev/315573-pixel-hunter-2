@@ -11,13 +11,14 @@ const wrap = (it) => {
   return shadow.cloneNode(true);
 };
 
-const increaseScreen = () => Math.min(screens.length - 1, currentScreen + 1);
-const decreaseScreen = () => Math.max(0, currentScreen - 1);
-
-const checkScreen = (screenNumber) => {
-  if (currentScreen !== screenNumber) {
-    currentScreen = screenNumber;
-    showScreen(currentScreen);
+const increaseScreen = () => {
+  if (currentScreen + 1 <= screens.length - 1) {
+    showScreen(++currentScreen);
+  }
+};
+const decreaseScreen = () => {
+  if (currentScreen - 1 >= 0) {
+    showScreen(--currentScreen);
   }
 };
 
@@ -31,10 +32,10 @@ showScreen(0);
 document.addEventListener(`keyup`, (event) => {
   switch (event.key) {
     case `ArrowRight`:
-      checkScreen(increaseScreen());
+      increaseScreen();
       break;
     case `ArrowLeft`:
-      checkScreen(decreaseScreen());
+      decreaseScreen();
       break;
   }
 });
@@ -59,10 +60,10 @@ arrows.innerHTML = `<style>
 
 const arrowButtons = arrows.querySelectorAll(`button.arrows__btn`);
 arrowButtons[0].addEventListener(`click`, () => {
-  checkScreen(decreaseScreen());
+  decreaseScreen();
 });
 arrowButtons[1].addEventListener(`click`, () => {
-  checkScreen(increaseScreen());
+  increaseScreen();
 });
 
 document.body.appendChild(arrows);
