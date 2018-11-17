@@ -12,12 +12,12 @@ const wrap = (it) => {
 };
 
 const increaseScreen = () => {
-  if (currentScreen + 1 <= screens.length - 1) {
+  if (currentScreen < screens.length - 1) {
     showScreen(++currentScreen);
   }
 };
 const decreaseScreen = () => {
-  if (currentScreen - 1 >= 0) {
+  if (currentScreen > 0) {
     showScreen(--currentScreen);
   }
 };
