@@ -47,7 +47,7 @@ const game3 = () => {
     </ul>
   </section>`);
 
-  [...game3Element.querySelectorAll(`.game__option`)].forEach((radio) => {
+  game3Element.querySelectorAll(`.game__option`).forEach((radio) => {
     radio.addEventListener(`click`, () => {
       showScreen(stats());
     });

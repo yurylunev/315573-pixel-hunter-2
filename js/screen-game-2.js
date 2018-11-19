@@ -49,7 +49,7 @@ const game2 = () => {
     </ul>
   </section>`);
 
-  [...game2Element.querySelectorAll(`.game__answer`)].forEach((radio) => {
+  game2Element.querySelectorAll(`.game__answer`).forEach((radio) => {
     radio.addEventListener(`click`, () => {
       showScreen(game3());
     });

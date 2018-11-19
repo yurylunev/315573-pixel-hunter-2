@@ -59,11 +59,10 @@ const game1 = () => {
       <li class="stats__result stats__result--unknown"></li>
     </ul>
   </section>`);
-
-  const answers = [...game1Element.querySelectorAll(`.game__answer`)];
+  const answers = game1Element.querySelectorAll(`.game__answer`);
   answers.forEach((label) => {
     label.control.addEventListener(`click`, () => {
-      if ([...answers.filter((answer) => answer.control.checked)].length === 2) {
+      if ([...answers].filter((answer) => answer.control.checked).length === 2) {
         showScreen(game2());
       }
     });
