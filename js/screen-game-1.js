@@ -62,7 +62,13 @@ const game1 = () => {
   const answers = game1Element.querySelectorAll(`.game__answer`);
   answers.forEach((label) => {
     label.control.addEventListener(`click`, () => {
-      if ([...answers].filter((answer) => answer.control.checked).length === 2) {
+      let checkedQuestions = 0;
+      answers.forEach((answer) => {
+        if (answer.control.checked) {
+          checkedQuestions++;
+        }
+      });
+      if (checkedQuestions === 2) {
         showScreen(game2());
       }
     });
