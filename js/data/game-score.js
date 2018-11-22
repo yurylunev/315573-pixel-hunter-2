@@ -1,10 +1,10 @@
-const addAnswer = (game, answer) => {
+const addAnswer = (state, answer) => {
   switch (answer) {
     case `fast`:
     case `correct`:
     case `slow`:
     case `wrong`:
-      return Object.freeze(Object.assign({}, game, {answers: [...game.answers, answer]}));
+      return Object.freeze(Object.assign({}, state, {answers: [...state.answers, answer]}));
   }
   throw new Error(`Incorrect answer value: ${answer}`);
 };
