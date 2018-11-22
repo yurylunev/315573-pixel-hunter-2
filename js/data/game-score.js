@@ -15,16 +15,15 @@ const countScore = (answers, lives) => {
   }
   let score = 0;
   for (let answer of answers) {
-    switch (answer) {
-      case `fast`:
-        score += 150;
-        break;
-      case `correct`:
-        score += 100;
-        break;
-      case `slow`:
-        score += 50;
-        break;
+    if (answer !== `wrong`) {
+      score += 100;
+      switch (answer) {
+        case `fast`:
+          score += 50;
+          break;
+        case `slow`:
+          score -= 50;
+      }
     }
   }
   return score + lives * 50;
