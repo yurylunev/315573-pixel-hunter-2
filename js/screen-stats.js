@@ -1,121 +1,67 @@
-import {getElementFromTemplate, showScreen} from "./utlis";
+import {getElementFromTemplate, onContinueClick, renderScreen} from "./utlis";
 import greeting from "./screen-greeting";
+import getStatusBar from "./answers-status";
+import {hasLives, isDead} from "./data/game-lives";
+import getHeader from "./game-header";
+import {countScore, fastAnswersCount, rightAnswersCount, slowAnswersCount} from "./data/game-score";
 
-const stats = () => {
-  const statsElement = getElementFromTemplate(`  <header class="header">
-    <button class="back">
-      <span class="visually-hidden">Вернуться к началу</span>
-      <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
-        <use xlink:href="img/sprite.svg#arrow-left"></use>
-      </svg>
-      <svg class="icon" width="101" height="44" viewBox="0 0 101 44" fill="#000000">
-        <use xlink:href="img/sprite.svg#logo-small"></use>
-      </svg>
-    </button>
-  </header>
-  <section class="result">
-    <h2 class="result__title">Победа!</h2>
-    <table class="result__table">
-      <tr>
-        <td class="result__number">1.</td>
-        <td colspan="2">
-          <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--unknown"></li>
-          </ul>
-        </td>
-        <td class="result__points">× 100</td>
-        <td class="result__total">900</td>
-      </tr>
-      <tr>
+const getExtras = (state) => {
+  const extraTemplate = (description, extraCount, extraScore) => `<tr>
         <td></td>
-        <td class="result__extra">Бонус за скорость:</td>
-        <td class="result__extra">1 <span class="stats__result stats__result--fast"></span></td>
-        <td class="result__points">× 50</td>
-        <td class="result__total">50</td>
-      </tr>
+        <td class="result__extra">${description}:</td>
+        <td class="result__extra">${extraCount} <span class="stats__result stats__result--alive"></span></td>
+        <td class="result__points">× ${Math.abs(extraScore)}</td>
+        <td class="result__total">${extraCount * extraScore}</td>
+      </tr>`;
+  let html = ``;
+  if (fastAnswersCount(state.answers)) {
+    html += extraTemplate(`Бонус за скорость:`, fastAnswersCount(state.answers), 50);
+  }
+  if (hasLives(state)) {
+    html += extraTemplate(`Бонус за жизни`, state.lives, 50);
+  }
+  if (slowAnswersCount(state.answers)) {
+    html += extraTemplate(`Штраф за медлительность`, slowAnswersCount(state.answers), -50);
+  }
+  return html;
+};
+
+const getResult = (state) => {
+  if (isDead(state)) {
+    return `<table class="result__table">
       <tr>
-        <td></td>
-        <td class="result__extra">Бонус за жизни:</td>
-        <td class="result__extra">2 <span class="stats__result stats__result--alive"></span></td>
-        <td class="result__points">× 50</td>
-        <td class="result__total">100</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td class="result__extra">Штраф за медлительность:</td>
-        <td class="result__extra">2 <span class="stats__result stats__result--slow"></span></td>
-        <td class="result__points">× 50</td>
-        <td class="result__total">-100</td>
-      </tr>
-      <tr>
-        <td colspan="5" class="result__total  result__total--final">950</td>
-      </tr>
-    </table>
-    <table class="result__table">
-      <tr>
-        <td class="result__number">2.</td>
         <td>
-          <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--wrong"></li>
-          </ul>
+          ${getStatusBar(state.answers)}
         </td>
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>
       </tr>
-    </table>
-    <table class="result__table">
+    </table>`;
+  } else {
+    return `<table class="result__table">
       <tr>
-        <td class="result__number">3.</td>
         <td colspan="2">
-          <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--unknown"></li>
-          </ul>
+          ${getStatusBar(state.answers)}
         </td>
         <td class="result__points">× 100</td>
-        <td class="result__total">900</td>
+        <td class="result__total">${rightAnswersCount(state.answers) * 100}</td>
       </tr>
+      ${getExtras(state)}
       <tr>
-        <td></td>
-        <td class="result__extra">Бонус за жизни:</td>
-        <td class="result__extra">2 <span class="stats__result stats__result--alive"></span></td>
-        <td class="result__points">× 50</td>
-        <td class="result__total">100</td>
+        <td colspan="5" class="result__total  result__total--final">${countScore(state.answers, state.lives)}</td>
       </tr>
-      <tr>
-        <td colspan="5" class="result__total  result__total--final">950</td>
-      </tr>
-    </table>
+    </table>`;
+  }
+};
+const stats = (state) => {
+  const statsElement = getElementFromTemplate(`${getHeader(state.time, state.lives)}
+  <section class="result">
+    <h2 class="result__title">${(isDead(state)) ? `Поражение!` : `Победа!`}</h2>
+    ${getResult(state)}
   </section>`);
 
   (statsElement.querySelector(`button.back`)).addEventListener(`click`, () => {
-    showScreen(greeting());
+    renderScreen(greeting, onContinueClick);
   });
   return statsElement;
 };

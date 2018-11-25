@@ -1,8 +1,7 @@
-import {getElementFromTemplate, showScreen} from "./utlis";
-import game1 from "./screen-game-1";
+import {getElementFromTemplate, renderScreen, onContinueClick} from "./utlis";
 import greeting from "./screen-greeting";
 
-const rules = () => {
+const rules = (onNextScreen) => {
   const rulesElement = getElementFromTemplate(`  <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -31,9 +30,7 @@ const rules = () => {
     </form>
   </section>`);
 
-  (rulesElement.querySelector(`.rules__button`)).addEventListener(`click`, () => {
-    showScreen(game1());
-  });
+  (rulesElement.querySelector(`.rules__button`)).addEventListener(`click`, onNextScreen);
 
   const rulesFormInput = rulesElement.querySelector(`.rules__input`);
   const rulesFormButton = rulesElement.querySelector(`.rules__button`);
@@ -47,7 +44,7 @@ const rules = () => {
   });
 
   (rulesElement.querySelector(`button.back`)).addEventListener(`click`, () => {
-    showScreen(greeting());
+    renderScreen(greeting, onContinueClick);
   });
   return rulesElement;
 };

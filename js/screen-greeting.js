@@ -1,5 +1,4 @@
-import {getElementFromTemplate, showScreen} from "./utlis";
-import rules from "./screen-rules";
+import {getElementFromTemplate, onContinueClick} from "./utlis";
 
 const greeting = () => {
   const greetingElement = getElementFromTemplate(` <section class="greeting central--blur">
@@ -23,9 +22,7 @@ const greeting = () => {
     </button>
   </section>`);
 
-  (greetingElement.querySelector(`.greeting__continue`)).addEventListener(`click`, () => {
-    showScreen(rules());
-  });
+  (greetingElement.querySelector(`.greeting__continue`)).addEventListener(`click`, onContinueClick);
   return greetingElement;
 };
 
