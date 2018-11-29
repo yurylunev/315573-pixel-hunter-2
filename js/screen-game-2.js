@@ -9,7 +9,7 @@ const game2 = (callback, state) => {
     <p class="game__task">Угадай, фото или рисунок?</p>
     <form class="game__content  game__content--wide">
       <div class="game__option">
-        <img src="${state.questions[state.level][0][0]}" alt="Option 1" width="705" height="455">
+        <img src="${state.questions[state.level][0].image}" alt="Option 1" width="705" height="455">
         <label class="game__answer  game__answer--photo">
           <input class="visually-hidden" name="question1" type="radio" value="photo">
           <span>Фото</span>
@@ -24,7 +24,7 @@ const game2 = (callback, state) => {
   </section>`);
 
   game2Element.querySelectorAll(`.game__answer`).forEach((answer) => {
-    if (state.questions[state.level][0][1] === answer.control.value) {
+    if (state.questions[state.level][0].rightAnswer === answer.control.value) {
       answer.addEventListener(`click`, () => callback(`correct`));
     } else {
       answer.addEventListener(`click`, () => callback(`wrong`));

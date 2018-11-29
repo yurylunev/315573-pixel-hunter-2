@@ -9,7 +9,7 @@ const game1 = (callback, state) => {
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
       ${state.questions[state.level].reduce((html, question, index) => html + `<div class="game__option">
-        <img src="${question[0]}" alt="Option ${index}" width="468" height="458">
+        <img src="${question.image}" alt="Option ${index}" width="468" height="458">
         <label class="game__answer game__answer--photo">
           <input class="visually-hidden" name="question${index}" type="radio" value="photo">
           <span>Фото</span>
@@ -33,7 +33,7 @@ const game1 = (callback, state) => {
         }
       });
       if (checkedAnswers.length === 2) {
-        if (checkedAnswers.reduce((flag, answer, index) => (flag && (answer.control.value === state.questions[state.level][index][1])), true)) {
+        if (checkedAnswers.reduce((flag, answer, index) => (flag && (answer.control.value === state.questions[state.level][index].rightAnswer)), true)) {
           callback(`correct`);
         } else {
           callback(`wrong`);
