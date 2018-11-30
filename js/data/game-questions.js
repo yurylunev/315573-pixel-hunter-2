@@ -45,7 +45,7 @@ const getQuestions = (game) => {
   let questions = questionsFromServer;
   return Object.freeze(Object.assign({}, game, {
     questions,
-    answers: Array(questions.length).fill(`unknown`)
+    answers: []
   }));
 };
 

@@ -1,8 +1,8 @@
-const answersSet = new Set([`fast`, `correct`, `slow`, `wrong`, `unknown`]);
+const answersSet = new Set([`fast`, `correct`, `slow`, `wrong`]);
 
 const addAnswer = (game, answer) => {
   if (answersSet.has(answer)) {
-    return Object.freeze(Object.assign({}, game, {answers: game.answers.fill(answer, game.level, game.level + 1)}));
+    return Object.freeze(Object.assign({}, game, {answers: [...game.answers, answer]}));
   }
   throw new Error(`Incorrect answer value: ${answer}`);
 };
