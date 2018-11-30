@@ -1,3 +1,6 @@
+import {getElementFromTemplate, onContinueClick, renderScreen} from "./utlis";
+import greeting from "./screen-greeting";
+
 const getLives = (lives, maxCount = 3) => {
   let html = ``;
   for (let i = maxCount; i > 0; i--) {
@@ -9,7 +12,7 @@ const getLives = (lives, maxCount = 3) => {
 };
 
 const getHeader = (time, lives) => {
-  return `  <header class="header">
+  const header = getElementFromTemplate(`  <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
       <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
@@ -19,9 +22,14 @@ const getHeader = (time, lives) => {
         <use xlink:href="img/sprite.svg#logo-small"></use>
       </svg>
     </button>
-    <div class="game__timer">${time}</div>
-    ${getLives(lives)}
-  </header>`;
+    ${(time !== undefined) ? `<div class="game__timer">${time}</div>` : ``}
+    ${(lives) ? getLives(lives) : ``}
+  </header>`);
+
+  (header.querySelector(`button.back`)).addEventListener(`click`, () => {
+    renderScreen(greeting, onContinueClick);
+  });
+  return header;
 };
 
 export default getHeader;

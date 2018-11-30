@@ -54,16 +54,15 @@ const getResult = (state) => {
   }
 };
 const stats = (state) => {
-  const statsElement = getElementFromTemplate(`${getHeader(state.time, state.lives)}
-  <section class="result">
+  const wrapper = document.createElement(`div`);
+  const statsElement = getElementFromTemplate(`  <section class="result">
     <h2 class="result__title">${(isDead(state)) ? `Поражение!` : `Победа!`}</h2>
     ${getResult(state)}
   </section>`);
 
-  (statsElement.querySelector(`button.back`)).addEventListener(`click`, () => {
-    renderScreen(greeting, onContinueClick);
-  });
-  return statsElement;
+  wrapper.appendChild(getHeader(state.time, state.lives));
+  wrapper.appendChild(statsElement);
+  return wrapper;
 };
 
 export default stats;

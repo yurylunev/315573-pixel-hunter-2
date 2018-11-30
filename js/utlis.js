@@ -43,7 +43,7 @@ const showScreen = (template) => {
 const getElementFromTemplate = (template) => {
   const result = document.createElement(`div`);
   result.innerHTML = template;
-  return result;
+  return result.children[0];
 };
 
 export {getElementFromTemplate, renderScreen, onAsteriskClick, onContinueClick};

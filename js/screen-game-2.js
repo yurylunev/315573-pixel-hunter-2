@@ -1,11 +1,10 @@
-import {getElementFromTemplate, renderScreen, onContinueClick} from "./utlis";
-import greeting from "./screen-greeting";
+import {getElementFromTemplate} from "./utlis";
 import getHeader from "./game-header";
 import getStatusBar from "./answers-status";
 
 const game2 = (callback, state) => {
-  const game2Element = getElementFromTemplate(`  ${getHeader(state.time, state.lives)}
-  <section class="game">
+  const wrapper = document.createElement(`div`);
+  const game2Element = getElementFromTemplate(`  <section class="game">
     <p class="game__task">Угадай, фото или рисунок?</p>
     <form class="game__content  game__content--wide">
       <div class="game__option">
@@ -31,10 +30,9 @@ const game2 = (callback, state) => {
     }
   });
 
-  (game2Element.querySelector(`button.back`)).addEventListener(`click`, () => {
-    renderScreen(greeting, onContinueClick);
-  });
-  return game2Element;
+  wrapper.appendChild(getHeader(state.time, state.lives));
+  wrapper.appendChild(game2Element);
+  return wrapper;
 };
 
 export default game2;

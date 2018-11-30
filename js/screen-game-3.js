@@ -1,11 +1,10 @@
-import {getElementFromTemplate, renderScreen, onContinueClick} from "./utlis";
-import greeting from "./screen-greeting";
+import {getElementFromTemplate} from "./utlis";
 import getHeader from "./game-header";
 import getStatusBar from "./answers-status";
 
 const game3 = (callback, state) => {
-  const game3Element = getElementFromTemplate(`  ${getHeader(state.time, state.lives)}
-  <section class="game">
+  const wrapper = document.createElement(`div`);
+  const game3Element = getElementFromTemplate(`  <section class="game">
     <p class="game__task">Найдите рисунок среди изображений</p>
     <form class="game__content  game__content--triple">
       ${state.questions[state.level].reduce((html, question, index) => html + `<div class="game__option">
@@ -23,10 +22,9 @@ const game3 = (callback, state) => {
     }
   });
 
-  (game3Element.querySelector(`button.back`)).addEventListener(`click`, () => {
-    renderScreen(greeting, onContinueClick);
-  });
-  return game3Element;
+  wrapper.appendChild(getHeader(state.time, state.lives));
+  wrapper.appendChild(game3Element);
+  return wrapper;
 };
 
 export default game3;
