@@ -1,4 +1,4 @@
-import {showScreen} from "./utlis";
 import intro from "./screen-intro";
+import {renderScreen, onAsteriskClick} from "./utlis";
 
-showScreen(intro());
+renderScreen(intro, onAsteriskClick);

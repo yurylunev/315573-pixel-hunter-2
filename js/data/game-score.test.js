@@ -1,24 +1,31 @@
 import {assert} from "chai";
 import {addAnswer, countScore} from "./game-score";
 import {INITIAL_GAME} from "./game-data";
+import {nextLevel} from "./game-levels";
+import {decreaseLives} from "./game-lives";
+import {getQuestions} from "./game-questions";
 
-const ANSWERS_LESS_10 = [`wrong`, `correct`, `fast`];
+const ANSWERS_LESS_10 = [`wrong`, `correct`, `fast`, `wrong`, `wrong`, `wrong`];
 const ANSWERS_CORRECT = [`correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`];
 const ANSWERS_FAST = [`fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`];
 const ANSWERS_SLOW = [`wrong`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `wrong`, `slow`, `wrong`];
 const ANSWERS_1000 = [`wrong`, `correct`, `fast`, `fast`, `slow`, `fast`, `fast`, `slow`, `fast`, `wrong`];
 
 const generateState = (answers) => {
-  let state = Object.assign({}, INITIAL_GAME);
+  let state = getQuestions(INITIAL_GAME);
   for (let answer of answers) {
-    state = Object.assign(addAnswer(state, answer));
+    if (answer !== `wrong`) {
+      state = Object.assign(nextLevel(addAnswer(state, answer)));
+    } else {
+      state = Object.assign(nextLevel(addAnswer(decreaseLives(state), answer)));
+    }
   }
   return Object.freeze(state);
 };
 
 describe(`Check count score`, () => {
 
-  it(`Should be equals answers and generated state`, () => {
+  it(`Should be correct answers array when add new answer`, () => {
     assert.deepEqual(generateState(ANSWERS_LESS_10).answers, ANSWERS_LESS_10);
     assert.deepEqual(generateState(ANSWERS_CORRECT).answers, ANSWERS_CORRECT);
   });
@@ -33,7 +40,7 @@ describe(`Check count score`, () => {
 
   describe(`Answers less then 10`, () => {
     it(`Should be -1`, () => {
-      assert.equal(countScore(generateState(ANSWERS_LESS_10).answers, 3), -1);
+      assert.equal(countScore(generateState(ANSWERS_LESS_10).answers, generateState(ANSWERS_LESS_10).lives), -1);
     });
   });
 
