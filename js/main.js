@@ -1,4 +1,4 @@
-import intro from "./screen-intro";
-import {renderScreen, onAsteriskClick} from "./utlis";
+import intro from "./intro";
+import {renderScreen, onAsteriskClick} from "./utils";
 
 renderScreen(intro, onAsteriskClick);

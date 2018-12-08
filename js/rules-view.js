@@ -1,9 +1,8 @@
-import {getElementFromTemplate} from "./utlis";
-import getHeader from "./game-header";
+import AbstractView from "./abstract-view";
 
-const rules = (onNextScreen) => {
-  const wrapper = document.createElement(`div`);
-  const rulesElement = getElementFromTemplate(`  <section class="rules">
+export default class RulesView extends AbstractView {
+  get template() {
+    return `  <section class="rules">
     <h2 class="rules__title">Правила</h2>
     <ul class="rules__description">
       <li>Угадай 10 раз для каждого изображения фото
@@ -18,24 +17,20 @@ const rules = (onNextScreen) => {
       <input class="rules__input" type="text" placeholder="Ваше Имя">
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
-  </section>`);
+  </section>`;
+  }
 
-  (rulesElement.querySelector(`.rules__button`)).addEventListener(`click`, onNextScreen);
+  bind(element, onNextScreen) {
+    element.querySelector(`.rules__button`).addEventListener(`click`, onNextScreen);
+    const rulesFormInput = element.querySelector(`.rules__input`);
+    const rulesFormButton = element.querySelector(`.rules__button`);
 
-  const rulesFormInput = rulesElement.querySelector(`.rules__input`);
-  const rulesFormButton = rulesElement.querySelector(`.rules__button`);
-
-  rulesFormInput.addEventListener(`keyup`, () => {
-    if (rulesFormInput.value) {
-      rulesFormButton.removeAttribute(`disabled`);
-    } else {
-      rulesFormButton.setAttribute(`disabled`, `true`);
-    }
-  });
-
-  wrapper.appendChild(getHeader());
-  wrapper.appendChild(rulesElement);
-  return wrapper;
-};
-
-export default rules;
+    rulesFormInput.addEventListener(`keyup`, () => {
+      if (rulesFormInput.value) {
+        rulesFormButton.removeAttribute(`disabled`);
+      } else {
+        rulesFormButton.setAttribute(`disabled`, `true`);
+      }
+    });
+  }
+}

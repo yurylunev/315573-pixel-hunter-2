@@ -1,5 +1,5 @@
-import {getElementFromTemplate, onContinueClick, renderScreen} from "./utlis";
-import greeting from "./screen-greeting";
+import {getElementFromTemplate, onContinueClick, renderScreen} from "./utils";
+import greeting from "./greeting";
 
 const getLives = (lives, maxCount = 3) => {
   let html = ``;

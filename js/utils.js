@@ -1,9 +1,9 @@
-import greeting from "./screen-greeting";
-import rules from "./screen-rules";
-import game1 from "./screen-game-1";
-import game2 from "./screen-game-2";
-import game3 from "./screen-game-3";
-import stats from "./screen-stats";
+import greeting from "./greeting";
+import rules from "./rules";
+import game1 from "./game-1";
+import game2 from "./game-2";
+import game3 from "./game-3";
+import stats from "./stats";
 import {getQuestions} from "./data/game-questions";
 import {INITIAL_GAME} from "./data/game-data";
 import {decreaseLives, hasLives, isDead} from "./data/game-lives";
