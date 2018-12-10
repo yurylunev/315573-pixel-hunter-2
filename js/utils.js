@@ -33,7 +33,6 @@ const onContinueClick = () => renderScreen(rules, () => onGameStart(getQuestions
 
 const onAsteriskClick = () => renderScreen(greeting, onContinueClick);
 
-
 const rootElement = document.querySelector(`#main`);
 const showScreen = (template) => {
   rootElement.innerHTML = ``;

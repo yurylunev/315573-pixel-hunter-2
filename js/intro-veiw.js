@@ -1,5 +1,4 @@
-import AbstractView from "./abstract-view";
-import {onAsteriskClick} from "./utils";
+import AbstractView from './abstract-view';
 
 export default class IntroView extends AbstractView {
   get template() {
@@ -11,6 +10,6 @@ export default class IntroView extends AbstractView {
   }
 
   bind(element) {
-    element.querySelector(`.intro__asterisk`).addEventListener(`click`, onAsteriskClick);
+    element.querySelector(`.intro__asterisk`).addEventListener(`click`, this.callback);
   }
 }

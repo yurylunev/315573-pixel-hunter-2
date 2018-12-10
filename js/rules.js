@@ -10,7 +10,7 @@ export default (callback, state) => {
   const headerElement = getElementFromTemplate(header.template);
 
   rules.bind(rulesElement, callback);
-  header.bind(headerElement,);
+  header.bind(headerElement, () => onContinueClick);
   wrapper.appendChild(headerElement);
   wrapper.appendChild(rulesElement);
 

@@ -1,5 +1,4 @@
 import AbstractView from "./abstract-view";
-import {onContinueClick} from "./utils";
 
 export default class GreetingView extends AbstractView {
   get template() {
@@ -26,6 +25,6 @@ export default class GreetingView extends AbstractView {
   }
 
   bind(element) {
-    element.querySelector(`.greeting__continue`).addEventListener(`click`, onContinueClick);
+    element.querySelector(`.greeting__continue`).addEventListener(`click`, this.callback);
   }
 }

@@ -1,11 +1,6 @@
 import AbstractView from "./abstract-view";
 
 export default class GameHeader extends AbstractView {
-  constructor(state) {
-    super();
-    this.state = state;
-  }
-
   get template() {
     return `  <header class="header">
     <button class="back">
@@ -18,29 +13,12 @@ export default class GameHeader extends AbstractView {
       </svg>
     </button>
     ${(this.state.time !== undefined) ? `<div class="game__timer">${this.state.time}</div>` : ``}
-    ${(this.state.lives) ? this._getLives() : ``}
+    ${(this.state.lives) ? this._getLives : ``}
   </header>`;
   }
 
   bind(element, callback) {
-    const answers = element.querySelectorAll(`.game__answer`);
-    answers.forEach((label) => {
-      label.control.addEventListener(`click`, () => {
-        let checkedAnswers = [];
-        answers.forEach((answer) => {
-          if (answer.control.checked) {
-            checkedAnswers.push(answer);
-          }
-        });
-        if (checkedAnswers.length === 2) {
-          if (checkedAnswers.reduce((flag, answer, index) => (flag && (answer.control.value === this.state.questions[this.state.level][index].rightAnswer)), true)) {
-            callback(`correct`);
-          } else {
-            callback(`wrong`);
-          }
-        }
-      });
-    });
+    element.querySelector(`.back`).addEventListener(`click`, callback);
   }
 
   get _getLives() {

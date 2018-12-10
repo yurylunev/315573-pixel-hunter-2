@@ -1,12 +1,8 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
+import GameHeader from "./game-header-view";
 
 export default class Game1View extends AbstractView {
-  constructor(state) {
-    super();
-    this.state = state;
-  }
-
   get template() {
     return `  <section class="game">
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
@@ -25,6 +21,10 @@ export default class Game1View extends AbstractView {
     </form>
     ${getStatusBar(this.state.answers)}
   </section>`;
+  }
+
+  get _header() {
+    return new GameHeader({callback: this.onBackButton, state: this.state});
   }
 
   bind(element, callback) {

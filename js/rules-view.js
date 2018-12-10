@@ -1,4 +1,5 @@
 import AbstractView from "./abstract-view";
+import GameHeader from "./game-header-view";
 
 export default class RulesView extends AbstractView {
   get template() {
@@ -20,8 +21,12 @@ export default class RulesView extends AbstractView {
   </section>`;
   }
 
-  bind(element, onNextScreen) {
-    element.querySelector(`.rules__button`).addEventListener(`click`, onNextScreen);
+  get _header() {
+    return new GameHeader({callback: this.onBackButton, state: this.state});
+  }
+
+  bind(element, callback) {
+    element.querySelector(`.rules__button`).addEventListener(`click`, callback);
     const rulesFormInput = element.querySelector(`.rules__input`);
     const rulesFormButton = element.querySelector(`.rules__button`);
 
