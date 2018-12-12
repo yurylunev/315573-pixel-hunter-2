@@ -24,7 +24,7 @@ export default class Game1View extends AbstractView {
   }
 
   get _header() {
-    return new GameHeader({callback: this.onBackButton, state: this.state});
+    return new GameHeader(this.backButton, this.state);
   }
 
   bind(element, callback) {
@@ -39,9 +39,9 @@ export default class Game1View extends AbstractView {
         });
         if (checkedAnswers.length === 2) {
           if (checkedAnswers.reduce((flag, answer, index) => (flag && (answer.control.value === this.state.questions[this.state.level][index].rightAnswer)), true)) {
-            callback(`correct`);
+            callback(this.state, `correct`);
           } else {
-            callback(`wrong`);
+            callback(this.state, `wrong`);
           }
         }
       });

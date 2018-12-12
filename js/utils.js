@@ -29,9 +29,9 @@ const gameTick = (state, returnValue) => {
 
 const onGameStart = (state) => renderScreen(getGameContent(state.questions, state.level), (returnValue) => gameTick(state, returnValue), state);
 
-const onContinueClick = () => renderScreen(rules, () => onGameStart(getQuestions(INITIAL_GAME)), onContinueClick);
+// const onContinueClick = () => renderScreen(rules, () => onGameStart(getQuestions(INITIAL_GAME)), onContinueClick);
 
-const onAsteriskClick = () => renderScreen(greeting, onContinueClick);
+// const onAsteriskClick = () => renderScreen(greeting, onContinueClick);
 
 const rootElement = document.querySelector(`#main`);
 const showScreen = (template) => {

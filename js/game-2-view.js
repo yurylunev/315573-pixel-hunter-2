@@ -1,12 +1,8 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
+import GameHeader from "./game-header-view";
 
 export default class Game2View extends AbstractView {
-  constructor(state) {
-    super();
-    this.state = state;
-  }
-
   get template() {
     return `  <section class="game">
     <p class="game__task">Угадай, фото или рисунок?</p>
@@ -27,12 +23,16 @@ export default class Game2View extends AbstractView {
   </section>`;
   }
 
+  get _header() {
+    return new GameHeader(this.backButton, this.state);
+  }
+
   bind(element, callback) {
     element.querySelectorAll(`.game__answer`).forEach((answer) => {
       if (this.state.questions[this.state.level][0].rightAnswer === answer.control.value) {
-        answer.control.addEventListener(`click`, () => callback(`correct`));
+        answer.control.addEventListener(`click`, () => callback(this.state, `correct`));
       } else {
-        answer.control.addEventListener(`click`, () => callback(`wrong`));
+        answer.control.addEventListener(`click`, () => callback(this.state, `wrong`));
       }
     });
   }

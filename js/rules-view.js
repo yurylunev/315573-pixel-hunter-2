@@ -1,5 +1,5 @@
 import AbstractView from "./abstract-view";
-import GameHeader from "./game-header-view";
+// import GameHeader from "./game-header-view";
 
 export default class RulesView extends AbstractView {
   get template() {
@@ -22,7 +22,7 @@ export default class RulesView extends AbstractView {
   }
 
   get _header() {
-    return new GameHeader({callback: this.onBackButton, state: this.state});
+    // return new GameHeader(this.callback, this.state);
   }
 
   bind(element, callback) {

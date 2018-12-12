@@ -1,12 +1,8 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
+import GameHeader from "./game-header-view";
 
 export default class Game3View extends AbstractView {
-  constructor(state) {
-    super();
-    this.state = state;
-  }
-
   get template() {
     return `  <section class="game">
     <p class="game__task">Найдите рисунок среди изображений</p>
@@ -19,12 +15,16 @@ export default class Game3View extends AbstractView {
   </section>`;
   }
 
+  get _header() {
+    return new GameHeader(this.backButton, this.state);
+  }
+
   bind(element, callback) {
     element.querySelectorAll(`.game__option`).forEach((answer, index) => {
       if (this.state.questions[this.state.level][index].rightAnswer === `paint`) {
-        answer.addEventListener(`click`, () => callback(`correct`));
+        answer.addEventListener(`click`, () => callback(this.state, `correct`));
       } else {
-        answer.addEventListener(`click`, () => callback(`wrong`));
+        answer.addEventListener(`click`, () => callback(this.state, `wrong`));
       }
     });
   }

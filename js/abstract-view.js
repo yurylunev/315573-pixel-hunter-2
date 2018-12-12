@@ -1,16 +1,8 @@
 export default class AbstractView {
-  constructor(props) {
-    if (props) {
-      if (props.callback) {
-        this.callback = props.callback;
-      }
-      if (props.onBackButton) {
-        this.onBackButton = props.onBackButton;
-      }
-      if (props.state) {
-        this.state = props.state;
-      }
-    }
+  constructor(callback, state = null, backButton = null) {
+    this.callback = callback;
+    this.state = state;
+    this.backButton = backButton;
   }
 
   get template() {

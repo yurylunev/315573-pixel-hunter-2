@@ -4,11 +4,6 @@ import {hasLives, isDead} from "./data/game-lives";
 import {countScore, fastAnswersCount, rightAnswersCount, slowAnswersCount} from "./data/game-score";
 
 export default class StatsView extends AbstractView {
-  constructor(state) {
-    super(state);
-    this.state = state;
-  }
-
   get template() {
     return `  <section class="result">
     <h2 class="result__title">${(isDead(this.state)) ? `Поражение!` : `Победа!`}</h2>
