@@ -13,7 +13,7 @@ export default class GameHeader extends AbstractView {
       </svg>
     </button>
     ${(this.state.time !== undefined) ? `<div class="game__timer">${this.state.time}</div>` : ``}
-    ${(this.state.lives) ? this._getLives : ``}
+    ${(this.state.lives !== undefined) ? this._getLives : ``}
   </header>`;
   }
 

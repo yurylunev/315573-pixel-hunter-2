@@ -2,6 +2,7 @@ import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
 import {hasLives, isDead} from "./data/game-lives";
 import {countScore, fastAnswersCount, rightAnswersCount, slowAnswersCount} from "./data/game-score";
+import GameHeader from "./game-header-view";
 
 export default class StatsView extends AbstractView {
   get template() {
@@ -9,6 +10,10 @@ export default class StatsView extends AbstractView {
     <h2 class="result__title">${(isDead(this.state)) ? `Поражение!` : `Победа!`}</h2>
     ${this._getResult(this.state)}
   </section>`;
+  }
+
+  get _header() {
+    return new GameHeader(this.backButton, this.state);
   }
 
   _getResult() {

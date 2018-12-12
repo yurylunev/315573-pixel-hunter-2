@@ -15,10 +15,7 @@ const decreaseLives = (game) => {
   return changeLives(game, game.lives - 1);
 };
 
-const isDead = (game) => {
-  console.log(game.lives === -1);
-  return (game.lives === -1);
-};
+const isDead = (game) => (game.lives === -1);
 
 const hasLives = (game) => (game.lives >= 0);
 
