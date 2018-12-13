@@ -1,5 +1,5 @@
 const addAnswer = (game, answer) => {
-  if (answer !== undefined) {
+  if (typeof answer === `boolean`) {
     const newAnswer = answer ? `correct` : `wrong`;
     return Object.freeze(Object.assign({}, game, {answers: [...game.answers, newAnswer]}));
   }
