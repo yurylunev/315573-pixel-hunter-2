@@ -21,11 +21,8 @@ export default class Game3View extends AbstractView {
 
   bind(element, callback) {
     element.querySelectorAll(`.game__option`).forEach((answer, index) => {
-      if (this.state.questions[this.state.level][index].rightAnswer === `paint`) {
-        answer.addEventListener(`click`, () => callback(this.state, `correct`));
-      } else {
-        answer.addEventListener(`click`, () => callback(this.state, `wrong`));
-      }
+      answer.addEventListener(`click`,
+          () => callback(this.state, (this.state.questions[this.state.level][index].rightAnswer === `paint`)));
     });
   }
 }

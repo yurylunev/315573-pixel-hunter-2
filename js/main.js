@@ -11,28 +11,28 @@ import {decreaseLives, hasLives, isDead} from "./data/game-lives";
 import {getQuestions} from "./data/game-questions";
 import {INITIAL_GAME} from "./data/game-data";
 
-const rules = new RulesView(() => onGameStart(getQuestions(INITIAL_GAME)));
+const rules = new RulesView(() => onGame(getQuestions(INITIAL_GAME)));
 const greeting = new GreetingView(() => rules.render());
 const intro = new IntroView(() => greeting.render());
 
 const gameView = (state) =>
-  new [Game2View, Game1View, Game3View][state.questions[state.level].length - 1]((game, returnedValue) =>
-    gameTick(game, returnedValue), state, () => greeting.render());
+  new [Game2View, Game1View, Game3View][state.questions[state.level].length - 1]((game, answer) =>
+    gameTick(game, answer), state, () => greeting.render());
 
-const gameTick = (state, returnValue) => {
+const gameTick = (state, answer) => {
   if (isFinalQuestion(state)) {
-    const stats = new StatsView(null, addAnswer(state, returnValue), () => greeting.render());
+    const stats = new StatsView(null, addAnswer(state, answer), () => greeting.render());
     stats.render();
-  } else if (returnValue === `wrong` && isDead(decreaseLives(state))) {
-    const stats = new StatsView(null, addAnswer(decreaseLives(state), returnValue), () => greeting.render());
+  } else if (!answer && isDead(decreaseLives(state))) {
+    const stats = new StatsView(null, addAnswer(decreaseLives(state), answer), () => greeting.render());
     stats.render();
-  } else if (returnValue === `wrong` && hasLives(decreaseLives(state))) {
-    onGameStart(nextLevel(decreaseLives(addAnswer(state, returnValue))));
+  } else if (!answer && hasLives(decreaseLives(state))) {
+    onGame(nextLevel(decreaseLives(addAnswer(state, answer))));
   } else {
-    onGameStart(nextLevel(addAnswer(state, returnValue)));
+    onGame(nextLevel(addAnswer(state, answer)));
   }
 };
 
-const onGameStart = (state) => gameView(state).render();
+const onGame = (state) => gameView(state).render();
 
 intro.render();

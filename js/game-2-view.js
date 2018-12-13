@@ -29,11 +29,8 @@ export default class Game2View extends AbstractView {
 
   bind(element, callback) {
     element.querySelectorAll(`.game__answer`).forEach((answer) => {
-      if (this.state.questions[this.state.level][0].rightAnswer === answer.control.value) {
-        answer.control.addEventListener(`click`, () => callback(this.state, `correct`));
-      } else {
-        answer.control.addEventListener(`click`, () => callback(this.state, `wrong`));
-      }
+      answer.control.addEventListener(`click`,
+          () => callback(this.state, (this.state.questions[this.state.level][0].rightAnswer === answer.control.value)));
     });
   }
 }

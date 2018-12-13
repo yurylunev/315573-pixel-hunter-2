@@ -38,11 +38,8 @@ export default class Game1View extends AbstractView {
           }
         });
         if (checkedAnswers.length === 2) {
-          if (checkedAnswers.reduce((flag, answer, index) => (flag && (answer.control.value === this.state.questions[this.state.level][index].rightAnswer)), true)) {
-            callback(this.state, `correct`);
-          } else {
-            callback(this.state, `wrong`);
-          }
+          callback(this.state, (checkedAnswers.reduce(
+              (flag, answer, index) => (flag && (answer.control.value === this.state.questions[this.state.level][index].rightAnswer)), true)));
         }
       });
     });
