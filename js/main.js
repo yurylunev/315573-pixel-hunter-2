@@ -20,11 +20,11 @@ const gameView = (state) =>
     gameTick(game, answer), state, () => greeting.render());
 
 const gameTick = (state, answer) => {
-  if (isFinalQuestion(state)) {
-    const stats = new StatsView(null, addAnswer(state, answer), () => greeting.render());
-    stats.render();
-  } else if (!answer && isDead(decreaseLives(state))) {
+  if (!answer && isDead(decreaseLives(state))) {
     const stats = new StatsView(null, addAnswer(decreaseLives(state), answer), () => greeting.render());
+    stats.render();
+  } else if (isFinalQuestion(state)) {
+    const stats = new StatsView(null, addAnswer(state, answer), () => greeting.render());
     stats.render();
   } else if (!answer && hasLives(decreaseLives(state))) {
     onGame(nextLevel(decreaseLives(addAnswer(state, answer))));
