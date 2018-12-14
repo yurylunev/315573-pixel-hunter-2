@@ -1,6 +1,5 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
-import GameHeader from "./game-header-view";
 
 export default class Game2View extends AbstractView {
   get template() {
@@ -21,10 +20,6 @@ export default class Game2View extends AbstractView {
     </form>
     ${getStatusBar(this.state.answers)}
   </section>`;
-  }
-
-  get _header() {
-    return new GameHeader(this.backButton, this.state);
   }
 
   bind(element, callback) {

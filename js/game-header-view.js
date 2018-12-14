@@ -31,4 +31,11 @@ export default class GameHeader extends AbstractView {
     }
     return `<div class="game__lives">${html}</div>`;
   }
+
+  clean(element) {
+    const header = element.querySelector(`header`);
+    if (header) {
+      header.remove();
+    }
+  }
 }

@@ -10,6 +10,7 @@ import {addAnswer} from "./data/game-score";
 import {decreaseLives, hasLives, isDead} from "./data/game-lives";
 import {getQuestions} from "./data/game-questions";
 import {INITIAL_GAME} from "./data/game-data";
+import GameHeader from "./game-header-view";
 
 const rules = new RulesView(() => onGame(getQuestions(INITIAL_GAME)));
 const greeting = new GreetingView(() => rules.render());
@@ -17,14 +18,14 @@ const intro = new IntroView(() => greeting.render());
 
 const gameView = (state) =>
   new [Game2View, Game1View, Game3View][state.questions[state.level].length - 1]((game, answer) =>
-    gameTick(game, answer), state, () => greeting.render());
+    gameTick(game, answer), state);
 
 const gameTick = (state, answer) => {
   if (!answer && isDead(decreaseLives(state))) {
-    const stats = new StatsView(null, addAnswer(decreaseLives(state), answer), () => greeting.render());
+    const stats = new StatsView(null, addAnswer(decreaseLives(state), answer));
     stats.render();
   } else if (isFinalQuestion(state)) {
-    const stats = new StatsView(null, addAnswer(state, answer), () => greeting.render());
+    const stats = new StatsView(null, addAnswer(state, answer));
     stats.render();
   } else if (!answer && hasLives(decreaseLives(state))) {
     onGame(nextLevel(decreaseLives(addAnswer(state, answer))));
@@ -33,6 +34,10 @@ const gameTick = (state, answer) => {
   }
 };
 
-const onGame = (state) => gameView(state).render();
+const onGame = (state) => {
+  const gameHeader = new GameHeader(() => greeting.render(), state);
+  gameHeader.render();
+  gameView(state).render();
+};
 
 intro.render();
