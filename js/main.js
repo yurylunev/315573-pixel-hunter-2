@@ -36,7 +36,7 @@ const gameTick = (state, answer) => {
   if (answer) {
     if (isFinalQuestion(state)) {
       const stats = new StatsView(nextState);
-      stats.render();
+      return stats.render();
     }
   } else {
     nextState = decreaseLives(nextState);
@@ -44,10 +44,10 @@ const gameTick = (state, answer) => {
     gameHeader.render();
     if (isDead(nextState) || isFinalQuestion(nextState)) {
       const stats = new StatsView(nextState);
-      stats.render();
+      return stats.render();
     }
   }
-  onGame(nextLevel(nextState));
+  return onGame(nextLevel(nextState));
 };
 
 const onGame = (state) => gameView(state).render();
