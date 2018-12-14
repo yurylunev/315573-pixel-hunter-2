@@ -2,11 +2,17 @@ import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
 
 export default class Game1View extends AbstractView {
+  constructor(callback, question, answers) {
+    super(callback);
+    this.question = question;
+    this.answers = answers;
+  }
+
   get template() {
     return `  <section class="game">
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
-      ${this.state.questions[this.state.level].reduce((html, question, index) => html + `<div class="game__option">
+      ${this.question.reduce((html, question, index) => html + `<div class="game__option">
         <img src="${question.image}" alt="Option ${index}" width="468" height="458">
         <label class="game__answer game__answer--photo">
           <input class="visually-hidden" name="question${index}" type="radio" value="photo">
@@ -18,7 +24,7 @@ export default class Game1View extends AbstractView {
         </label>
       </div>`, ``)}
     </form>
-    ${getStatusBar(this.state.answers)}
+    ${getStatusBar(this.answers)}
   </section>`;
   }
 
@@ -33,8 +39,8 @@ export default class Game1View extends AbstractView {
           }
         });
         if (checkedAnswers.length === 2) {
-          callback(this.state, (checkedAnswers.reduce(
-              (flag, answer, index) => (flag && (answer.control.value === this.state.questions[this.state.level][index].rightAnswer)), true)));
+          callback((checkedAnswers.reduce(
+              (flag, answer, index) => (flag && (answer.control.value === this.question[index].rightAnswer)), true)));
         }
       });
     });

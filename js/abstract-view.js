@@ -1,7 +1,6 @@
 export default class AbstractView {
-  constructor(callback, state = null) {
+  constructor(callback) {
     this.callback = callback;
-    this.state = state;
   }
 
   get template() {

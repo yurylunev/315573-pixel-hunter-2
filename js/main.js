@@ -14,35 +14,40 @@ import GameHeader from "./game-header-view";
 
 const rules = new RulesView(() => {
   const state = getQuestions(INITIAL_GAME);
-  const gameHeader = new GameHeader(() => greeting.render(), state);
+  const gameHeader = new GameHeader(() => greeting.render(), state.lives, state.time);
   gameHeader.render();
   onGame(state);
 });
-const greeting = new GreetingView(() => rules.render());
+const greeting = new GreetingView(() => {
+  const gameHeader = new GameHeader(() => greeting.render());
+  gameHeader.render();
+  rules.render();
+});
 const intro = new IntroView(() => greeting.render());
 
-const gameView = (state) =>
-  new [Game2View, Game1View, Game3View][state.questions[state.level].length - 1]((game, answer) =>
-    gameTick(game, answer), state);
+const gameView = (state) => {
+  const currentQuestion = state.questions[state.level];
+  return new [Game2View, Game1View, Game3View][currentQuestion.length - 1]((answer) =>
+    gameTick(state, answer), currentQuestion, state.answers);
+};
 
 const gameTick = (state, answer) => {
+  let nextState = addAnswer(state, answer);
   if (answer) {
     if (isFinalQuestion(state)) {
-      const stats = new StatsView(null, addAnswer(state, answer));
+      const stats = new StatsView(nextState);
       stats.render();
-    } else {
-      onGame(nextLevel(addAnswer(state, answer)));
     }
   } else {
-    const gameHeader = new GameHeader(() => greeting.render(), decreaseLives(state));
+    nextState = decreaseLives(nextState);
+    const gameHeader = new GameHeader(() => greeting.render(), nextState.lives, nextState.time);
     gameHeader.render();
-    if (isDead(decreaseLives(state)) || isFinalQuestion(state)) {
-      const stats = new StatsView(null, decreaseLives(addAnswer(state, answer)));
+    if (isDead(nextState) || isFinalQuestion(nextState)) {
+      const stats = new StatsView(nextState);
       stats.render();
-    } else {
-      onGame(nextLevel(decreaseLives(addAnswer(state, answer))));
     }
   }
+  onGame(nextLevel(nextState));
 };
 
 const onGame = (state) => gameView(state).render();

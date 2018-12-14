@@ -1,6 +1,11 @@
 import AbstractView from "./abstract-view";
 
 export default class GameHeader extends AbstractView {
+  constructor(callback, lives = null, time = null) {
+    super(callback);
+    this.lives = lives;
+    this.time = time;
+  }
   get template() {
     return `  <header class="header">
     <button class="back">
@@ -12,8 +17,8 @@ export default class GameHeader extends AbstractView {
         <use xlink:href="img/sprite.svg#logo-small"></use>
       </svg>
     </button>
-    ${(this.state.time !== undefined) ? `<div class="game__timer">${this.state.time}</div>` : ``}
-    ${(this.state.lives !== undefined) ? this._getLives : ``}
+    ${(this.time !== null) ? `<div class="game__timer">${this.time}</div>` : ``}
+    ${(this.lives !== null) ? this._getLives : ``}
   </header>`;
   }
 
@@ -25,7 +30,7 @@ export default class GameHeader extends AbstractView {
     const MAX_LIVES = 3;
     let html = ``;
     for (let i = MAX_LIVES; i > 0; i--) {
-      html += (this.state.lives < i)
+      html += (this.lives < i)
         ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
         : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
     }
