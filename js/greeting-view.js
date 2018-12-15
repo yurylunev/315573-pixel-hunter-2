@@ -1,7 +1,8 @@
-import {getElementFromTemplate, onContinueClick} from "./utlis";
+import AbstractView from "./abstract-view";
 
-const greeting = () => {
-  const greetingElement = getElementFromTemplate(` <section class="greeting central--blur">
+export default class GreetingView extends AbstractView {
+  get template() {
+    return ` <section class="greeting central--blur">
     <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
     <div class="greeting__asterisk asterisk"><span class="visually-hidden">Я просто красивая звёздочка</span>*</div>
     <div class="greeting__challenge">
@@ -20,10 +21,17 @@ const greeting = () => {
         <use xlink:href="img/sprite.svg#arrow-right"></use>
       </svg>
     </button>
-  </section>`);
+  </section>`;
+  }
 
-  (greetingElement.querySelector(`.greeting__continue`)).addEventListener(`click`, onContinueClick);
-  return greetingElement;
-};
+  bind(element) {
+    element.querySelector(`.greeting__continue`).addEventListener(`click`, this.callback);
+  }
 
-export default greeting;
+  render() {
+    const root = document.querySelector(`#main`);
+    const element = this.element;
+    root.innerHTML = ``;
+    root.appendChild(element);
+  }
+}

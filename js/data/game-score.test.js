@@ -1,8 +1,6 @@
 import {assert} from "chai";
 import {addAnswer, countScore} from "./game-score";
 import {INITIAL_GAME} from "./game-data";
-import {nextLevel} from "./game-levels";
-import {decreaseLives} from "./game-lives";
 import {getQuestions} from "./game-questions";
 
 const ANSWERS_LESS_10 = [`wrong`, `correct`, `fast`, `wrong`, `wrong`, `wrong`];
@@ -13,13 +11,7 @@ const ANSWERS_1000 = [`wrong`, `correct`, `fast`, `fast`, `slow`, `fast`, `fast`
 
 const generateState = (answers) => {
   let state = getQuestions(INITIAL_GAME);
-  for (let answer of answers) {
-    if (answer !== `wrong`) {
-      state = Object.assign(nextLevel(addAnswer(state, answer)));
-    } else {
-      state = Object.assign(nextLevel(addAnswer(decreaseLives(state), answer)));
-    }
-  }
+  state = Object.assign({}, state, {answers});
   return Object.freeze(state);
 };
 
@@ -36,12 +28,6 @@ describe(`Check count score`, () => {
     assert.throws(() => addAnswer(generateState(ANSWERS_LESS_10), null), `Incorrect answer value`);
     assert.throws(() => addAnswer(generateState(ANSWERS_LESS_10), undefined), `Incorrect answer value`);
     assert.throws(() => addAnswer(generateState(ANSWERS_LESS_10), []), `Incorrect answer value`);
-  });
-
-  describe(`Answers less then 10`, () => {
-    it(`Should be -1`, () => {
-      assert.equal(countScore(generateState(ANSWERS_LESS_10).answers, generateState(ANSWERS_LESS_10).lives), -1);
-    });
   });
 
   describe(`10 correct answers`, () => {
