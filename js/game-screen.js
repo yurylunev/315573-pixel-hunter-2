@@ -33,15 +33,19 @@ class GameScreen {
     return this.gameView().render();
   }
 
+  _startTimer() {
+    this._timer = setTimeout(() => this._timerTick(), 1000);
+  }
+
   _timerTick() {
     if (this.model.isTimerOff) {
-      this._timer = setTimeout(() => this._timerTick(), 1000);
+      this._startTimer();
       this._gameTick(false);
     } else {
       this.model.tick();
       const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer);
       gameHeader.updateTimer();
-      this._timer = setTimeout(() => this._timerTick(), 1000);
+      this._startTimer();
     }
   }
 
