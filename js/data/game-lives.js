@@ -9,7 +9,7 @@ const changeLives = (game, lives) => {
 };
 
 const decreaseLives = (game) => {
-  if (game.lives === -1) {
+  if (isDead(game)) {
     return Object.freeze(game);
   }
   return changeLives(game, game.lives - 1);
@@ -17,6 +17,4 @@ const decreaseLives = (game) => {
 
 const isDead = (game) => (game.lives === -1);
 
-const hasLives = (game) => (game.lives >= 0);
-
-export {changeLives, decreaseLives, isDead, hasLives};
+export {changeLives, decreaseLives, isDead};

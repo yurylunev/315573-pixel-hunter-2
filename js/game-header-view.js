@@ -1,6 +1,6 @@
 import AbstractView from "./abstract-view";
 
-export default class GameHeader extends AbstractView {
+class GameHeaderView extends AbstractView {
   constructor(callback, lives = null, time = null) {
     super(callback);
     this.lives = lives;
@@ -44,3 +44,5 @@ export default class GameHeader extends AbstractView {
     }
   }
 }
+
+export default GameHeaderView;

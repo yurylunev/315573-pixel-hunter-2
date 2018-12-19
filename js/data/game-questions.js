@@ -49,4 +49,8 @@ const getQuestions = (game) => {
   }));
 };
 
-export {getQuestions};
+const getCurrentQuestion = (game) => {
+  return game.questions[game.level];
+};
+
+export {getQuestions, getCurrentQuestion};
