@@ -25,7 +25,6 @@ class GameScreen {
     } else {
       this.model.takeLive();
       const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives);
-      gameHeader.updateTimer();
       gameHeader.updateLives();
       if (this.model.isDead() || this.model.isFinalQuestion()) {
         return this.stopGame();
