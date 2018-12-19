@@ -3,7 +3,7 @@ import {isFinalQuestion, nextLevel, getCurrentLevel} from "./data/game-levels";
 import {getCurrentQuestion, getQuestions} from "./data/game-questions";
 import {decreaseLives, isDead} from "./data/game-lives";
 import {addAnswer} from "./data/game-score";
-import {changeTimer, resetTimer, tick} from "./data/game-timer";
+import {changeTimer, isTimerOff, resetTimer, tick} from "./data/game-timer";
 
 class GameModel {
   constructor(playerName) {
@@ -31,12 +31,17 @@ class GameModel {
     return getCurrentQuestion(this._state);
   }
 
+  get isTimerOff() {
+    return isTimerOff(this._state);
+  }
+
   isFinalQuestion() {
     return isFinalQuestion(this._state);
   }
 
   nextLevel() {
     this._state = nextLevel(this._state);
+    this.resetTimer();
   }
 
   restart() {

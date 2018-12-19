@@ -14,7 +14,7 @@ class GameHeaderView extends AbstractView {
   }
 
   get _timerTemplate() {
-    return `<div class="game__timer">${this.timer}</div>`;
+    return `<div class="game__timer">${(this.timer !== null) ? this.timer : ``}</div>`;
   }
 
   get _getLivesTemplate() {
@@ -25,7 +25,7 @@ class GameHeaderView extends AbstractView {
         ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
         : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
     }
-    return `<div class="game__lives">${html}</div>`;
+    return `<div class="game__lives">${(this.lives !== null) ? html : ``}</div>`;
   }
 
   get template() {
@@ -39,8 +39,8 @@ class GameHeaderView extends AbstractView {
         <use xlink:href="img/sprite.svg#logo-small"></use>
       </svg>
     </button>
-    ${(this.timer !== null) ? this._timerTemplate : ``}
-    ${(this.lives !== null) ? this._getLivesTemplate : ``}
+    ${this._timerTemplate}
+    ${this._getLivesTemplate}
   </header>`;
   }
 
