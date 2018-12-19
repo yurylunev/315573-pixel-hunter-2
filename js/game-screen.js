@@ -42,7 +42,7 @@ class GameScreen {
       this.model.tick();
       const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer);
       gameHeader.updateTimer();
-      this._timer = setTimeout(() => this._timerTick(), 200);
+      this._timer = setTimeout(() => this._timerTick(), 1000);
     }
   }
 
