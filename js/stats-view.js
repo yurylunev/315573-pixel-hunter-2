@@ -58,7 +58,7 @@ class StatsView extends AbstractView {
       </tr>`;
     let html = ``;
     if (fastAnswersCount(this.answers)) {
-      html += extraTemplate(`Бонус за скорость:`, fastAnswersCount(this.answers), 50);
+      html += extraTemplate(`Бонус за скорость`, fastAnswersCount(this.answers), 50);
     }
     if (!this._isDead) {
       html += extraTemplate(`Бонус за жизни`, this.lives, 50);

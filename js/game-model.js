@@ -3,6 +3,7 @@ import {isFinalQuestion, nextLevel, getCurrentLevel} from "./data/game-levels";
 import {getCurrentQuestion, getQuestions} from "./data/game-questions";
 import {decreaseLives, isDead} from "./data/game-lives";
 import {addAnswer} from "./data/game-score";
+import {changeTimer, resetTimer, tick} from "./data/game-timer";
 
 class GameModel {
   constructor(playerName) {
@@ -12,6 +13,10 @@ class GameModel {
 
   get lives() {
     return this._state.lives;
+  }
+
+  get timer() {
+    return this._state.timer;
   }
 
   get answers() {
@@ -36,6 +41,19 @@ class GameModel {
 
   restart() {
     this._state = getQuestions(INITIAL_GAME);
+    this._state = resetTimer(this._state);
+  }
+
+  stopTimer() {
+    this._state = changeTimer(this._state, 0);
+  }
+
+  resetTimer() {
+    this._state = resetTimer(this._state);
+  }
+
+  tick() {
+    this._state = tick(this._state);
   }
 
   isDead() {

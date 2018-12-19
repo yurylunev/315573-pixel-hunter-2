@@ -17,27 +17,42 @@ class GameScreen {
 
   _gameTick(answer) {
     this.model.addAnswer(answer);
+    this.model.resetTimer();
     this.model.nextLevel();
     if (answer) {
       if (this.model.isFinalQuestion()) {
-        return this.onLastScreen(this.model.answers, this.model.lives);
+        return this.stopGame();
       }
     } else {
       this.model.takeLive();
       const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives);
-      gameHeader.render();
+      gameHeader.updateLives();
       if (this.model.isDead() || this.model.isFinalQuestion()) {
-        return this.onLastScreen(this.model.answers, this.model.lives);
+        return this.stopGame();
       }
     }
     return this.gameView().render();
   }
 
+  _timerTick() {
+    this.model.tick();
+    const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer);
+    gameHeader.updateTimer();
+    this._timer = setTimeout(() => this._timerTick(), 1000);
+  }
+
+  stopGame() {
+    clearInterval(this._timer);
+    this.model.stopTimer();
+    this.onLastScreen(this.model.answers, this.model.lives);
+  }
+
   startGame() {
-    const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives);
+    const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer);
     const gameContent = this.gameView();
     gameHeader.render();
     gameContent.render();
+    this._timerTick();
   }
 }
 
