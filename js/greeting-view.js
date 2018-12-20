@@ -29,9 +29,7 @@ export default class GreetingView extends AbstractView {
   }
 
   render() {
-    const root = document.querySelector(`#main`);
-    const element = this.element;
-    root.innerHTML = ``;
-    root.appendChild(element);
+    this.root.innerHTML = ``;
+    this.root.appendChild(this.element);
   }
 }

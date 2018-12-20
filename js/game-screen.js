@@ -39,8 +39,10 @@ class GameScreen {
 
   _timerTick() {
     if (this.model.isTimerOff) {
-      this._startTimer();
       this._gameTick(false);
+      if (!this.model.isDead()) {
+        this._startTimer();
+      }
     } else {
       this.model.tick();
       const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer);
@@ -51,7 +53,6 @@ class GameScreen {
 
   stopGame() {
     clearInterval(this._timer);
-    this.model.stopTimer();
     this.onLastScreen(this.model.answers, this.model.lives);
   }
 

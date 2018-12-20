@@ -1,6 +1,7 @@
 export default class AbstractView {
   constructor(callback) {
     this.callback = callback;
+    this.root = document.querySelector(`#main`);
   }
 
   get template() {
@@ -14,10 +15,8 @@ export default class AbstractView {
   }
 
   render() {
-    const root = document.querySelector(`#main`);
-    const element = this.element;
-    this.clean(root);
-    root.appendChild(element);
+    this.clean(this.root);
+    this.root.appendChild(this.element);
   }
 
   bind() {
