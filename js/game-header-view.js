@@ -1,11 +1,33 @@
 import AbstractView from "./abstract-view";
 
-export default class GameHeader extends AbstractView {
+const getElementFromTemplate = (template) => {
+  const element = document.createElement(`div`);
+  element.innerHTML = template;
+  return element.children[0];
+};
+
+class GameHeaderView extends AbstractView {
   constructor(callback, lives = null, time = null) {
     super(callback);
     this.lives = lives;
-    this.time = time;
+    this.timer = time;
   }
+
+  get _timerTemplate() {
+    return `<div class="game__timer">${(this.timer !== null) ? this.timer : ``}</div>`;
+  }
+
+  get _getLivesTemplate() {
+    const MAX_LIVES = 3;
+    let html = ``;
+    for (let i = MAX_LIVES; i > 0; i--) {
+      html += (this.lives < i)
+        ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
+        : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
+    }
+    return `<div class="game__lives">${(this.lives !== null) ? html : ``}</div>`;
+  }
+
   get template() {
     return `  <header class="header">
     <button class="back">
@@ -17,24 +39,13 @@ export default class GameHeader extends AbstractView {
         <use xlink:href="img/sprite.svg#logo-small"></use>
       </svg>
     </button>
-    ${(this.time !== null) ? `<div class="game__timer">${this.time}</div>` : ``}
-    ${(this.lives !== null) ? this._getLives : ``}
+    ${this._timerTemplate}
+    ${this._getLivesTemplate}
   </header>`;
   }
 
   bind(element, callback) {
     element.querySelector(`.back`).addEventListener(`click`, callback);
-  }
-
-  get _getLives() {
-    const MAX_LIVES = 3;
-    let html = ``;
-    for (let i = MAX_LIVES; i > 0; i--) {
-      html += (this.lives < i)
-        ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
-        : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
-    }
-    return `<div class="game__lives">${html}</div>`;
   }
 
   clean(element) {
@@ -43,4 +54,18 @@ export default class GameHeader extends AbstractView {
       header.remove();
     }
   }
+
+  updateTimer() {
+    const updateElement = this.root.querySelector(`header`);
+    const timer = updateElement.querySelector(`.game__timer`);
+    updateElement.replaceChild(getElementFromTemplate(this._timerTemplate), timer);
+  }
+
+  updateLives() {
+    const updateElement = this.root.querySelector(`header`);
+    const lives = updateElement.querySelector(`.game__lives`);
+    updateElement.replaceChild(getElementFromTemplate(this._getLivesTemplate), lives);
+  }
 }
+
+export default GameHeaderView;

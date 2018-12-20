@@ -1,6 +1,20 @@
+import {MAX_TIME} from './game-timer';
+
+const getAnswerWithTime = (time, answer) => {
+  if (answer) {
+    if (time > MAX_TIME - 10) {
+      return `fast`;
+    } else if (time < MAX_TIME - 20) {
+      return `slow`;
+    }
+    return `correct`;
+  }
+  return `wrong`;
+};
+
 const addAnswer = (game, answer) => {
   if (typeof answer === `boolean`) {
-    const newAnswer = answer ? `correct` : `wrong`;
+    const newAnswer = getAnswerWithTime(game.timer, answer);
     return Object.freeze(Object.assign({}, game, {answers: [...game.answers, newAnswer]}));
   }
   throw new Error(`Incorrect answer value: ${answer}`);
