@@ -1,7 +1,7 @@
 import {assert} from "chai";
 import {addAnswer, countScore} from "./game-score";
 import {INITIAL_GAME} from "./game-data";
-import {getQuestions} from "./game-questions";
+import {getTestQuestions} from "./game-questions";
 
 const ANSWERS_LESS_10 = [`wrong`, `correct`, `fast`, `wrong`, `wrong`, `wrong`];
 const ANSWERS_CORRECT = [`correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`];
@@ -10,7 +10,7 @@ const ANSWERS_SLOW = [`wrong`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `
 const ANSWERS_1000 = [`wrong`, `correct`, `fast`, `fast`, `slow`, `fast`, `fast`, `slow`, `fast`, `wrong`];
 
 const generateState = (answers) => {
-  let state = getQuestions(INITIAL_GAME);
+  let state = getTestQuestions(INITIAL_GAME);
   state = Object.assign({}, state, {answers});
   return Object.freeze(state);
 };
