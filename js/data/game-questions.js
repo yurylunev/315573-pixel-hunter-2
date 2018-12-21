@@ -46,7 +46,7 @@ const testQuestions = [
 const getQuestions = (game, questionsFromServer) => {
   return Object.freeze(Object.assign({}, game, {
     questions: adaptServerData(questionsFromServer),
-    answers: []
+    answers: Array(questionsFromServer.length).fill(`unknown`)
   }));
 };
 

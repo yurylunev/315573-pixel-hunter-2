@@ -14,8 +14,7 @@ const getAnswerWithTime = (time, answer) => {
 
 const addAnswer = (game, answer) => {
   if (typeof answer === `boolean`) {
-    const newAnswer = getAnswerWithTime(game.timer, answer);
-    return Object.freeze(Object.assign({}, game, {answers: [...game.answers, newAnswer]}));
+    return Object.freeze(Object.assign({}, game, {answers: game.answers.fill(getAnswerWithTime(game.timer, answer), game.level, game.level + 1)}));
   }
   throw new Error(`Incorrect answer value: ${answer}`);
 };
