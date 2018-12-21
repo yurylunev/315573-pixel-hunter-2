@@ -27,10 +27,9 @@ class Loader {
     return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`).then(checkStatus).then(toJSON);
   }
 
-  static saveResults(data, name = DEFAULT_NAME) {
-    data = Object.assign({}, {stats: data.answers, lives: data.lives});
+  static saveResults(stats, lives, name = DEFAULT_NAME) {
     const requestSettings = {
-      body: JSON.stringify(data),
+      body: JSON.stringify(Object.assign({}, {stats, lives})),
       headers: {
         'Content-Type': `application/json`
       },

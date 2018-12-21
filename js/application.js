@@ -37,7 +37,7 @@ class Application {
   }
 
   static showRules() {
-    const rules = new RulesScreen(() => Application.showGame(`xaLT`), () => Application.showGreeting());
+    const rules = new RulesScreen((playerName) => Application.showGame(playerName), () => Application.showGreeting());
     rules.render();
   }
 
@@ -48,7 +48,7 @@ class Application {
   }
 
   static showStats(model) {
-    Loader.saveResults(model, model.playerName)
+    Loader.saveResults(model.answers, model.lives, model.playerName)
       .then(() => Loader.loadResults(model.playerName))
       .then((data) => {
         const statistics = new StatsScreen(() => Application.showGreeting(), data);
