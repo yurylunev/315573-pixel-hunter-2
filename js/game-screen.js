@@ -45,7 +45,7 @@ class GameScreen {
       }
     } else {
       this.model.tick();
-      const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer);
+      const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer, this.model.warningTimer);
       gameHeader.updateTimer();
       this._startTimer();
     }

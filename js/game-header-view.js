@@ -7,14 +7,15 @@ const getElementFromTemplate = (template) => {
 };
 
 class GameHeaderView extends AbstractView {
-  constructor(callback, lives = null, time = null) {
+  constructor(callback, lives = null, time = null, blink = false) {
     super(callback);
     this.lives = lives;
     this.timer = time;
+    this.blink = blink;
   }
 
   get _timerTemplate() {
-    return `<div class="game__timer">${(this.timer !== null) ? this.timer : ``}</div>`;
+    return `<div class="game__timer${this.blink ? ` blink` : ``}">${(this.timer !== null) ? this.timer : ``}</div>`;
   }
 
   get _getLivesTemplate() {
