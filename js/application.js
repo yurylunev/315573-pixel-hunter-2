@@ -5,6 +5,7 @@ import GameScreen from './game-screen';
 import StatsScreen from './stats-screen';
 import ErrorScreen from './error-screen';
 import GameModel from './game-model';
+import Loader from './loader';
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
@@ -26,7 +27,7 @@ class Application {
       .then((data) => {
         questions = data;
       })
-      .then(()=>Application.showGreeting())
+      .then(() => Application.showGreeting())
       .catch((err) => Application.showError(err));
   }
 
@@ -42,13 +43,18 @@ class Application {
 
   static showGame(userName) {
     const model = new GameModel(userName, questions);
-    const gameScreen = new GameScreen(model, (answers, lives) => Application.showStats(answers, lives), () => Application.showGreeting());
+    const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showGreeting());
     gameScreen.startGame();
   }
 
-  static showStats(answers, lives) {
-    const statistics = new StatsScreen(() => Application.showGreeting(), answers, lives);
-    statistics.render();
+  static showStats(model) {
+    Loader.saveResults(model, model.playerName)
+      .then(() => Loader.loadResults(model.playerName))
+      .then((data) => {
+        const statistics = new StatsScreen(() => Application.showGreeting(), data);
+        statistics.showScores();
+      })
+      .catch(Application.showError);
   }
 
   static showError(error) {
