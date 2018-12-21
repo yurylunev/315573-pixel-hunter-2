@@ -15,7 +15,18 @@ const checkStatus = (response) => {
   }
 };
 
+const loadImage = (url) => {
+  return new Promise((onLoad, onError) => {
+    const image = new Image();
+    image.onload = () => onLoad(image);
+    image.onerror = () => onError(`Не удалось загрузить картнку: ${url}`);
+    image.src = url;
+  });
+};
+
+
 let questions;
+let loadedImages;
 
 class Application {
   static showIntro() {
@@ -26,6 +37,13 @@ class Application {
       .then((response) => response.json())
       .then((data) => {
         questions = data;
+        let imagesURLs = [];
+        data.forEach((level) => level.answers.forEach((answer) => imagesURLs.push(loadImage(answer.image.url))));
+        return imagesURLs;
+      })
+      .then((imagePromises) => Promise.all(imagePromises))
+      .then((images) => {
+        loadedImages = images;
       })
       .then(() => Application.showGreeting())
       .catch((err) => Application.showError(err));
@@ -42,7 +60,7 @@ class Application {
   }
 
   static showGame(userName) {
-    const model = new GameModel(userName, questions);
+    const model = new GameModel(userName, questions, loadedImages);
     const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showGreeting());
     gameScreen.startGame();
   }
