@@ -8,7 +8,7 @@ class RulesScreen {
   }
 
   render() {
-    const rules = new RulesView(this.onNextScreen);
+    const rules = new RulesView((userName) => this.onNextScreen(userName));
     const header = new GameHeaderView(this.onFirstScreen);
     header.render();
     rules.render();

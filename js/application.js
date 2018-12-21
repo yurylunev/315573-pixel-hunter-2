@@ -5,6 +5,7 @@ import GameScreen from './game-screen';
 import StatsScreen from './stats-screen';
 import ErrorScreen from './error-screen';
 import GameModel from './game-model';
+import Loader from './loader';
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
@@ -14,7 +15,18 @@ const checkStatus = (response) => {
   }
 };
 
+const loadImage = (url) => {
+  return new Promise((onLoad, onError) => {
+    const image = new Image();
+    image.onload = () => onLoad(image);
+    image.onerror = () => onError(`Не удалось загрузить картнку: ${url}`);
+    image.src = url;
+  });
+};
+
+
 let questions;
+let loadedImages;
 
 class Application {
   static showIntro() {
@@ -25,8 +37,15 @@ class Application {
       .then((response) => response.json())
       .then((data) => {
         questions = data;
+        let imagesURLs = [];
+        data.forEach((level) => level.answers.forEach((answer) => imagesURLs.push(loadImage(answer.image.url))));
+        return imagesURLs;
       })
-      .then(()=>Application.showGreeting())
+      .then((imagePromises) => Promise.all(imagePromises))
+      .then((images) => {
+        loadedImages = images;
+      })
+      .then(() => Application.showGreeting())
       .catch((err) => Application.showError(err));
   }
 
@@ -36,19 +55,24 @@ class Application {
   }
 
   static showRules() {
-    const rules = new RulesScreen(() => Application.showGame(`xaLT`), () => Application.showGreeting());
+    const rules = new RulesScreen((playerName) => Application.showGame(playerName), () => Application.showGreeting());
     rules.render();
   }
 
   static showGame(userName) {
-    const model = new GameModel(userName, questions);
-    const gameScreen = new GameScreen(model, (answers, lives) => Application.showStats(answers, lives), () => Application.showGreeting());
+    const model = new GameModel(userName, questions, loadedImages);
+    const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showGreeting());
     gameScreen.startGame();
   }
 
-  static showStats(answers, lives) {
-    const statistics = new StatsScreen(() => Application.showGreeting(), answers, lives);
-    statistics.render();
+  static showStats(model) {
+    Loader.saveResults(model.answers, model.lives, model.playerName)
+      .then(() => Loader.loadResults(model.playerName))
+      .then((data) => {
+        const statistics = new StatsScreen(() => Application.showGreeting(), data);
+        statistics.showScores();
+      })
+      .catch(Application.showError);
   }
 
   static showError(error) {

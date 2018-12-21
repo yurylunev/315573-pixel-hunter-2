@@ -21,7 +21,7 @@ export default class RulesView extends AbstractView {
   }
 
   bind(element, callback) {
-    element.querySelector(`.rules__button`).addEventListener(`click`, callback);
+    element.querySelector(`.rules__button`).addEventListener(`click`, () => callback(rulesFormInput.value));
     const rulesFormInput = element.querySelector(`.rules__input`);
     const rulesFormButton = element.querySelector(`.rules__button`);
 

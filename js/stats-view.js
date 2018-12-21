@@ -3,29 +3,29 @@ import getStatusBar from "./answers-status";
 import {countScore, fastAnswersCount, rightAnswersCount, slowAnswersCount} from "./data/game-score";
 
 class StatsView extends AbstractView {
-  constructor(answers, lives) {
+  constructor(data) {
     super();
-    this.answers = answers;
-    this.lives = lives;
+    this.data = data.sort((a, b) => b.date - a.date);
   }
 
-  get _isDead() {
-    return this.lives === -1;
+  isDead(score) {
+    return score.lives === -1;
   }
 
   get template() {
     return `  <section class="result">
-    <h2 class="result__title">${(this._isDead) ? `Поражение!` : `Победа!`}</h2>
-    ${this._getResult()}
+    <h2 class="result__title">${(this.isDead(this.data[0])) ? `Поражение!` : `Победа!`}</h2>
+    ${this.data.reduce((html, score, index) => html + this._getResult(score, index + 1), ``)}
   </section>`;
   }
 
-  _getResult() {
-    if (this._isDead) {
+  _getResult(score, index) {
+    if (this.isDead(score)) {
       return `<table class="result__table">
       <tr>
+        <td class="result__number">${index}.</td>
         <td>
-          ${getStatusBar(this.answers)}
+          ${getStatusBar(score.stats)}
         </td>
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>
@@ -34,21 +34,22 @@ class StatsView extends AbstractView {
     } else {
       return `<table class="result__table">
       <tr>
+        <td class="result__number">${index}.</td>
         <td colspan="2">
-          ${getStatusBar(this.answers)}
+          ${getStatusBar(score.stats)}
         </td>
         <td class="result__points">× 100</td>
-        <td class="result__total">${rightAnswersCount(this.answers) * 100}</td>
+        <td class="result__total">${rightAnswersCount(score.stats) * 100}</td>
       </tr>
-      ${this._getExtras()}
+      ${this._getExtras(score)}
       <tr>
-        <td colspan="5" class="result__total  result__total--final">${countScore(this.answers, this.lives)}</td>
+        <td colspan="5" class="result__total  result__total--final">${countScore(score.stats, score.lives)}</td>
       </tr>
     </table>`;
     }
   }
 
-  _getExtras() {
+  _getExtras(score) {
     const extraTemplate = (description, extraCount, extraScore) => `<tr>
         <td></td>
         <td class="result__extra">${description}:</td>
@@ -57,14 +58,14 @@ class StatsView extends AbstractView {
         <td class="result__total">${extraCount * extraScore}</td>
       </tr>`;
     let html = ``;
-    if (fastAnswersCount(this.answers)) {
-      html += extraTemplate(`Бонус за скорость`, fastAnswersCount(this.answers), 50);
+    if (fastAnswersCount(score.stats)) {
+      html += extraTemplate(`Бонус за скорость`, fastAnswersCount(score.stats), 50);
     }
-    if (!this._isDead) {
-      html += extraTemplate(`Бонус за жизни`, this.lives, 50);
+    if (!this.isDead(score)) {
+      html += extraTemplate(`Бонус за жизни`, score.lives, 50);
     }
-    if (slowAnswersCount(this.answers)) {
-      html += extraTemplate(`Штраф за медлительность`, slowAnswersCount(this.answers), -50);
+    if (slowAnswersCount(score.stats)) {
+      html += extraTemplate(`Штраф за медлительность`, slowAnswersCount(score.stats), -50);
     }
     return html;
   }

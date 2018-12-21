@@ -2,14 +2,13 @@ import StatsView from './stats-view';
 import GameHeaderView from './game-header-view';
 
 class StatsScreen {
-  constructor(onBackButton, answers, lives) {
+  constructor(onBackButton, data) {
     this.onBackButton = onBackButton;
-    this.answers = answers;
-    this.lives = lives;
+    this.data = data;
   }
 
-  render() {
-    const stats = new StatsView(this.answers, this.lives);
+  showScores() {
+    const stats = new StatsView(this.data);
     const header = new GameHeaderView(this.onBackButton, this.lives);
     header.render();
     stats.render();

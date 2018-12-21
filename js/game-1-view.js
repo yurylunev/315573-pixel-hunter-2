@@ -13,7 +13,7 @@ export default class Game1View extends AbstractView {
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
       ${this.question.reduce((html, question, index) => html + `<div class="game__option">
-        <img src="${question.image}" alt="Option ${index}" width="468" height="458">
+        <img src="${question.image.url}" alt="Option ${index}" width="${question.image.width}" height="${question.image.height}">
         <label class="game__answer game__answer--photo">
           <input class="visually-hidden" name="question${index}" type="radio" value="photo">
           <span>Фото</span>

@@ -12,7 +12,7 @@ export default class Game3View extends AbstractView {
     <p class="game__task">Найдите рисунок среди изображений</p>
     <form class="game__content  game__content--triple">
       ${this.question.reduce((html, question, index) => html + `<div class="game__option">
-        <img src="${question.image}" alt="Option ${index}" width="304" height="455">
+        <img src="${question.image.url}" alt="Option ${index}" width="${question.image.width}" height="${question.image.height}">
       </div>`, ``)}
     </form>
     ${getStatusBar(this.answers)}
