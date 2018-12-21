@@ -43,9 +43,9 @@ const testQuestions = [
   ]
 ];
 
-const getQuestions = (game, questionsFromServer) => {
+const getQuestions = (game, questionsFromServer, loadedImages) => {
   return Object.freeze(Object.assign({}, game, {
-    questions: adaptServerData(questionsFromServer),
+    questions: adaptServerData(questionsFromServer, loadedImages),
     answers: Array(questionsFromServer.length).fill(`unknown`)
   }));
 };

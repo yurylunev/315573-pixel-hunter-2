@@ -6,9 +6,10 @@ import {addAnswer} from "./data/game-score";
 import {isTimerOff, resetTimer, tick, warningTimer} from "./data/game-timer";
 
 class GameModel {
-  constructor(playerName, questionsFromServer) {
+  constructor(playerName, questionsFromServer, loadedIages) {
     this.playerName = playerName;
     this.questionsFromServer = questionsFromServer;
+    this.loadedImages = loadedIages;
     this.restart();
   }
 
@@ -42,7 +43,7 @@ class GameModel {
   }
 
   restart() {
-    this._state = getQuestions(INITIAL_GAME, this.questionsFromServer);
+    this._state = getQuestions(INITIAL_GAME, this.questionsFromServer, this.loadedImages);
     this.resetTimer();
   }
 
