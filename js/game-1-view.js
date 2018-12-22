@@ -1,5 +1,6 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
+import {DEBUG, DEBUG_STYLE} from "./settings";
 
 export default class Game1View extends AbstractView {
   constructor(callback, question, answers) {
@@ -30,7 +31,11 @@ export default class Game1View extends AbstractView {
 
   bind(element, callback) {
     const answers = element.querySelectorAll(`.game__answer`);
-    answers.forEach((label) => {
+    answers.forEach((label, i) => {
+      const isCorrect = this.question[i > 1 ? 0 : 1].rightAnswer === label.control.value;
+      if (DEBUG && isCorrect) {
+        label.querySelector(`span`).style.cssText = DEBUG_STYLE;
+      }
       label.control.addEventListener(`click`, () => {
         let checkedAnswers = [];
         answers.forEach((answer) => {
@@ -39,8 +44,7 @@ export default class Game1View extends AbstractView {
           }
         });
         if (checkedAnswers.length === 2) {
-          callback((checkedAnswers.reduce(
-              (flag, answer, index) => (flag && (answer.control.value === this.question[index].rightAnswer)), true)));
+          callback((checkedAnswers.reduce((flag) => (flag && isCorrect), true)));
         }
       });
     });

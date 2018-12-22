@@ -16,10 +16,15 @@ export default class AbstractView {
 
   render() {
     this.clean(this.root);
-    this.root.appendChild(this.element);
+    this.elemInstance = this.element;
+    this.root.appendChild(this.elemInstance);
   }
 
   bind() {
+  }
+
+  fadeout() {
+    this.elemInstance.classList.add(`intro__fadeout`);
   }
 
   clean(element) {

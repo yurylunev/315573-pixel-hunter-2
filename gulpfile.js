@@ -65,7 +65,8 @@ gulp.task(`scripts`, () => {
         babel({
           babelrc: false,
           exclude: `node_modules/**`,
-          presets: [`@babel/env`]
+          presets: [`@babel/env`],
+          plugins: [`transform-runtime`]
         })
       ]
     }, `iife`))
