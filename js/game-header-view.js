@@ -58,14 +58,18 @@ class GameHeaderView extends AbstractView {
 
   updateTimer() {
     const updateElement = this.root.querySelector(`header`);
-    const timer = updateElement.querySelector(`.game__timer`);
-    updateElement.replaceChild(getElementFromTemplate(this._timerTemplate), timer);
+    if (updateElement) {
+      const timer = updateElement.querySelector(`.game__timer`);
+      updateElement.replaceChild(getElementFromTemplate(this._timerTemplate), timer);
+    }
   }
 
   updateLives() {
     const updateElement = this.root.querySelector(`header`);
-    const lives = updateElement.querySelector(`.game__lives`);
-    updateElement.replaceChild(getElementFromTemplate(this._getLivesTemplate), lives);
+    if (updateElement) {
+      const lives = updateElement.querySelector(`.game__lives`);
+      updateElement.replaceChild(getElementFromTemplate(this._getLivesTemplate), lives);
+    }
   }
 }
 

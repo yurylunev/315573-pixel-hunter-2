@@ -4,6 +4,7 @@ import RulesScreen from './rules-screen';
 import GameScreen from './game-screen';
 import StatsScreen from './stats-screen';
 import ErrorScreen from './error-screen';
+import ConfirmScreen from './confirm-screen';
 import GameModel from './game-model';
 import Loader from './loader';
 
@@ -57,7 +58,7 @@ class Application {
 
   static showGame(userName) {
     const model = new GameModel(userName, questions, loadedImages);
-    const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showGreeting());
+    const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showConfirm());
     gameScreen.startGame();
   }
 
@@ -79,6 +80,11 @@ class Application {
   static showError(error) {
     const errorScreen = new ErrorScreen(error);
     errorScreen.render();
+  }
+
+  static showConfirm() {
+    const confirm = new ConfirmScreen(() => Application.showGreeting());
+    confirm.show();
   }
 }
 
