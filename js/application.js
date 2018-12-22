@@ -7,14 +7,6 @@ import ErrorScreen from './error-screen';
 import GameModel from './game-model';
 import Loader from './loader';
 
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
-};
-
 const loadImage = (url) => {
   return new Promise((onLoad, onError) => {
     const image = new Image();
@@ -24,29 +16,32 @@ const loadImage = (url) => {
   });
 };
 
-
 let questions;
 let loadedImages;
 
 class Application {
-  static showIntro() {
+  static async loadIntro() {
     const intro = new IntroScreen(() => Application.showGreeting());
     intro.render();
-    window.fetch(`https://es.dump.academy/pixel-hunter/questions`)
-      .then(checkStatus)
-      .then((response) => response.json())
-      .then((data) => {
-        questions = data;
-        let imagesURLs = [];
-        data.forEach((level) => level.answers.forEach((answer) => imagesURLs.push(loadImage(answer.image.url))));
-        return imagesURLs;
-      })
-      .then((imagePromises) => Promise.all(imagePromises))
-      .then((images) => {
-        loadedImages = images;
-      })
-      .then(() => Application.showGreeting())
-      .catch((err) => Application.showError(err));
+    try {
+      let imagesURLs = [];
+      const response = await fetch(`https://es.dump.academy/pixel-hunter/questions`);
+      questions = await response.json();
+      for (const level of questions) {
+        for (const answer of level.answers) {
+          imagesURLs.push(loadImage(answer.image.url));
+        }
+      }
+      loadedImages = await Promise.all(imagesURLs);
+    } catch (e) {
+      Application.showError(new Error(`${e.status}: ${e.statusText}`));
+    } finally {
+      Application.showGreeting();
+    }
+  }
+
+  static showIntro() {
+    Application.loadIntro().catch((e) => Application.showError(e));
   }
 
   static showGreeting() {
@@ -65,14 +60,19 @@ class Application {
     gameScreen.startGame();
   }
 
+  static async loadStats(model) {
+    let data;
+    try {
+      await Loader.saveResults(model.answers, model.lives, model.playerName);
+      data = await Loader.loadResults(model.playerName);
+    } finally {
+      const statistics = new StatsScreen(() => Application.showGreeting(), data);
+      statistics.showScores();
+    }
+  }
+
   static showStats(model) {
-    Loader.saveResults(model.answers, model.lives, model.playerName)
-      .then(() => Loader.loadResults(model.playerName))
-      .then((data) => {
-        const statistics = new StatsScreen(() => Application.showGreeting(), data);
-        statistics.showScores();
-      })
-      .catch(Application.showError);
+    Application.loadStats(model).catch((e) => Application.showError(e));
   }
 
   static showError(error) {

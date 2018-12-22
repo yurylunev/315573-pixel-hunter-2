@@ -23,11 +23,12 @@ class Loader {
       .then(adaptServerData);
   }
 
-  static loadResults(name = DEFAULT_NAME) {
-    return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`).then(checkStatus).then(toJSON);
+  static async loadResults(name = DEFAULT_NAME) {
+    const data = await fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`);
+    return data.json();
   }
 
-  static saveResults(stats, lives, name = DEFAULT_NAME) {
+  static async saveResults(stats, lives, name = DEFAULT_NAME) {
     const requestSettings = {
       body: JSON.stringify(Object.assign({}, {stats, lives})),
       headers: {
@@ -35,8 +36,8 @@ class Loader {
       },
       method: `POST`
     };
-    return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, requestSettings)
-      .then(checkStatus);
+    return await fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, requestSettings);
   }
 }
+
 export default Loader;
