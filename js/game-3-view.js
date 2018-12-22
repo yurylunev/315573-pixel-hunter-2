@@ -1,5 +1,6 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
+import {DEBUG, DEBUG_STYLE} from "./settings";
 
 export default class Game3View extends AbstractView {
   constructor(callback, question, answers) {
@@ -7,6 +8,7 @@ export default class Game3View extends AbstractView {
     this.question = question;
     this.answers = answers;
   }
+
   get template() {
     return `  <section class="game">
     <p class="game__task">Найдите рисунок среди изображений</p>
@@ -21,8 +23,11 @@ export default class Game3View extends AbstractView {
 
   bind(element, callback) {
     element.querySelectorAll(`.game__option`).forEach((answer, index) => {
-      answer.addEventListener(`click`,
-          () => callback((this.question[index].rightAnswer === `paint`)));
+      const isCorrect = this.question[index].rightAnswer === `paint`;
+      if (DEBUG && isCorrect) {
+        answer.style.cssText = DEBUG_STYLE;
+      }
+      answer.addEventListener(`click`, () => callback(isCorrect));
     });
   }
 }
