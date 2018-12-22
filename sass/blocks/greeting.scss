@@ -1,7 +1,6 @@
 /*
  * Стили для приветственного экрана. Правила игры
  */
-
 @import "../mixins/general";
 @import "../mixins/text";
 @import "../variables/colors";
@@ -76,4 +75,18 @@
   position: absolute;
   right: 0;
   top: 0;
+}
+
+.greeting__fadein {
+  animation: fadein_greeting 1s linear;
+}
+
+@keyframes fadein_greeting {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

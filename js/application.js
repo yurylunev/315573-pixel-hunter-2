@@ -36,7 +36,8 @@ class Application {
     } catch (e) {
       Application.showError(new Error(`${e.status}: ${e.statusText}`));
     } finally {
-      Application.showGreeting();
+      intro.fadeout();
+      setTimeout(() => Application.showGreeting(), 1000);
     }
   }
 

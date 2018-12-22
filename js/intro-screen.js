@@ -6,8 +6,12 @@ class IntroScreen {
   }
 
   render() {
-    const intro = new IntroView(this.onNextScreen);
-    return intro.render();
+    this.intro = new IntroView(this.onNextScreen);
+    return this.intro.render();
+  }
+
+  fadeout() {
+    this.intro.fadeout();
   }
 }
 
