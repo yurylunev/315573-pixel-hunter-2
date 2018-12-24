@@ -11,10 +11,10 @@ class Game3View extends AbstractView {
 
   get template() {
     return `  <section class="game">
-    <p class="game__task">Найдите рисунок среди изображений</p>
+    <p class="game__task">${this.question.text}</p>
     <form class="game__content  game__content--triple">
-      ${this.question.reduce((html, question, index) => html + `<div class="game__option">
-        <img src="${question.image.url}" alt="Option ${index}" width="${question.image.width}" height="${question.image.height}">
+      ${this.question.images.reduce((html, image, index) => html + `<div class="game__option">
+        <img src="${image.url}" alt="Option ${index}" width="${image.width}" height="${image.height}">
       </div>`, ``)}
     </form>
     ${getStatusBar(this.answers)}
@@ -22,8 +22,11 @@ class Game3View extends AbstractView {
   }
 
   bind(element, callback) {
+    const availableAnswers = Array.from(new Set(this.question.images.map((image) => image.rightAnswer)));
+    const sameQuestions = this.question.images.filter((image) => image.rightAnswer === availableAnswers[0]);
+    const currentRightAnswer = (sameQuestions.length === 1) ? availableAnswers[0] : availableAnswers[1];
     element.querySelectorAll(`.game__option`).forEach((answer, index) => {
-      const isCorrect = this.question[index].rightAnswer === `paint`;
+      const isCorrect = this.question.images[index].rightAnswer === currentRightAnswer;
       if (DEBUG && isCorrect) {
         answer.style.cssText = DEBUG_STYLE;
       }

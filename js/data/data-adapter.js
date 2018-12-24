@@ -32,12 +32,11 @@ async function adaptServerData(questionsFromServer) {
     }
   }
   for (const level of questions) {
-    adaptedData.push(level.answers.map((answer) => {
-      return {
-        image: Object.assign({}, {url: answer.image.url}, getSizes(answer.image.width, answer.image.height, images[i].width, images[i++].height)),
-        rightAnswer: answer.type.slice(0, 5)
-      };
-    }));
+    adaptedData.push({
+      text: level.question,
+      images:
+        level.answers.map((answer) => Object.assign({}, {url: answer.image.url}, getSizes(answer.image.width, answer.image.height, images[i].width, images[i++].height), {rightAnswer: answer.type.slice(0, 5)}))
+    });
   }
   return adaptedData;
 }
