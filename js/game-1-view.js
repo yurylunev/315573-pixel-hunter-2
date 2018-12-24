@@ -2,7 +2,7 @@ import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
 import {DEBUG, DEBUG_STYLE} from "./settings";
 
-export default class Game1View extends AbstractView {
+class Game1View extends AbstractView {
   constructor(callback, question, answers) {
     super(callback);
     this.question = question;
@@ -50,3 +50,5 @@ export default class Game1View extends AbstractView {
     });
   }
 }
+
+export default Game1View;

@@ -1,6 +1,6 @@
 import AbstractView from "./abstract-view";
 
-export default class RulesView extends AbstractView {
+class RulesView extends AbstractView {
   get template() {
     return `  <section class="rules">
     <h2 class="rules__title">Правила</h2>
@@ -34,3 +34,5 @@ export default class RulesView extends AbstractView {
     });
   }
 }
+
+export default RulesView;

@@ -1,4 +1,4 @@
-export default class AbstractView {
+class AbstractView {
   constructor(callback) {
     this.callback = callback;
     this.root = document.querySelector(`#main`);
@@ -34,3 +34,5 @@ export default class AbstractView {
     }
   }
 }
+
+export default AbstractView;

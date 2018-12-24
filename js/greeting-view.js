@@ -1,6 +1,6 @@
 import AbstractView from "./abstract-view";
 
-export default class GreetingView extends AbstractView {
+class GreetingView extends AbstractView {
   get template() {
     return ` <section class="greeting central--blur greeting__fadein">
     <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
@@ -33,3 +33,5 @@ export default class GreetingView extends AbstractView {
     this.root.appendChild(this.element);
   }
 }
+
+export default GreetingView;

@@ -14,21 +14,6 @@ class GameHeaderView extends AbstractView {
     this.blink = blink;
   }
 
-  get _timerTemplate() {
-    return `<div class="game__timer${this.blink ? ` blink` : ``}">${(this.timer !== null) ? this.timer : ``}</div>`;
-  }
-
-  get _getLivesTemplate() {
-    const MAX_LIVES = 3;
-    let html = ``;
-    for (let i = MAX_LIVES; i > 0; i--) {
-      html += (this.lives < i)
-        ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
-        : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
-    }
-    return `<div class="game__lives">${(this.lives !== null) ? html : ``}</div>`;
-  }
-
   get template() {
     return `  <header class="header">
     <button class="back">
@@ -45,14 +30,26 @@ class GameHeaderView extends AbstractView {
   </header>`;
   }
 
-  bind(element, callback) {
-    element.querySelector(`.back`).addEventListener(`click`, callback);
+  get _timerTemplate() {
+    return `<div class="game__timer${this.blink ? ` blink` : ``}">${(this.timer !== null) ? this.timer : ``}</div>`;
   }
 
-  clean(element) {
-    const header = element.querySelector(`header`);
-    if (header) {
-      header.remove();
+  get _getLivesTemplate() {
+    const MAX_LIVES = 3;
+    let html = ``;
+    for (let i = MAX_LIVES; i > 0; i--) {
+      html += (this.lives < i)
+        ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
+        : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
+    }
+    return `<div class="game__lives">${(this.lives !== null) ? html : ``}</div>`;
+  }
+
+  updateLives() {
+    const updateElement = this.root.querySelector(`header`);
+    if (updateElement) {
+      const lives = updateElement.querySelector(`.game__lives`);
+      updateElement.replaceChild(getElementFromTemplate(this._getLivesTemplate), lives);
     }
   }
 
@@ -64,12 +61,15 @@ class GameHeaderView extends AbstractView {
     }
   }
 
-  updateLives() {
-    const updateElement = this.root.querySelector(`header`);
-    if (updateElement) {
-      const lives = updateElement.querySelector(`.game__lives`);
-      updateElement.replaceChild(getElementFromTemplate(this._getLivesTemplate), lives);
+  clean(element) {
+    const header = element.querySelector(`header`);
+    if (header) {
+      header.remove();
     }
+  }
+
+  bind(element, callback) {
+    element.querySelector(`.back`).addEventListener(`click`, callback);
   }
 }
 

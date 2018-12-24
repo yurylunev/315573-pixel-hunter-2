@@ -32,6 +32,10 @@ class GameModel {
     return isTimerOff(this._state);
   }
 
+  get warningTimer() {
+    return isWarningTimer(this._state);
+  }
+
   isFinalQuestion() {
     return isFinalQuestion(this._state);
   }
@@ -64,10 +68,6 @@ class GameModel {
 
   takeLive() {
     this._state = decreaseLives(this._state);
-  }
-
-  get warningTimer() {
-    return isWarningTimer(this._state);
   }
 }
 

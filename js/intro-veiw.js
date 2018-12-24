@@ -1,6 +1,6 @@
 import AbstractView from './abstract-view';
 
-export default class IntroView extends AbstractView {
+class IntroView extends AbstractView {
   get template() {
     return `  <section class="intro">
     <button class="intro__asterisk asterisk" type="button"><span class="visually-hidden">Продолжить</span>*</button>
@@ -13,3 +13,5 @@ export default class IntroView extends AbstractView {
     element.querySelector(`.intro__asterisk`).addEventListener(`click`, this.callback);
   }
 }
+
+export default IntroView;
