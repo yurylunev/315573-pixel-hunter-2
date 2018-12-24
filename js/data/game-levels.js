@@ -8,10 +8,10 @@ const changeLevel = (game, level) => {
   return Object.freeze(Object.assign({}, game, {level}));
 };
 
-const nextLevel = (game) => {
+const getNextLevel = (game) => {
   return changeLevel(game, game.level + 1);
 };
 
 const isFinalQuestion = (game) => game.level > game.questions.length - 1;
 
-export {changeLevel, nextLevel, isFinalQuestion};
+export {changeLevel, getNextLevel, isFinalQuestion};

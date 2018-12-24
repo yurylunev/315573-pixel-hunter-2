@@ -1,9 +1,9 @@
 import {INITIAL_GAME} from "./data/game-data";
-import {isFinalQuestion, nextLevel} from "./data/game-levels";
+import {isFinalQuestion, getNextLevel} from "./data/game-levels";
 import {getCurrentQuestion, getQuestions} from "./data/game-questions";
 import {decreaseLives, isDead} from "./data/game-lives";
 import {addAnswer} from "./data/game-score";
-import {isTimerOff, resetTimer, tick, warningTimer} from "./data/game-timer";
+import {isTimerOff, resetTimer, tick, isWarningTimer} from "./data/game-timer";
 
 class GameModel {
   constructor(playerName, questionsFromServer, loadedIages) {
@@ -38,7 +38,7 @@ class GameModel {
   }
 
   nextLevel() {
-    this._state = nextLevel(this._state);
+    this._state = getNextLevel(this._state);
     this.resetTimer();
   }
 
@@ -68,7 +68,7 @@ class GameModel {
   }
 
   get warningTimer() {
-    return warningTimer(this._state);
+    return isWarningTimer(this._state);
   }
 }
 

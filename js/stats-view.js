@@ -1,6 +1,6 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
-import {countScore, fastAnswersCount, rightAnswersCount, slowAnswersCount} from "./data/game-score";
+import {countScore, countFastAnswers, countRightAnswers, countSlowAnswers} from "./data/game-score";
 
 class StatsView extends AbstractView {
   constructor(data) {
@@ -39,7 +39,7 @@ class StatsView extends AbstractView {
           ${getStatusBar(score.stats)}
         </td>
         <td class="result__points">× 100</td>
-        <td class="result__total">${rightAnswersCount(score.stats) * 100}</td>
+        <td class="result__total">${countRightAnswers(score.stats) * 100}</td>
       </tr>
       ${this._getExtras(score)}
       <tr>
@@ -58,14 +58,14 @@ class StatsView extends AbstractView {
         <td class="result__total">${extraCount * extraScore}</td>
       </tr>`;
     let html = ``;
-    if (fastAnswersCount(score.stats)) {
-      html += extraTemplate(`Бонус за скорость`, fastAnswersCount(score.stats), 50);
+    if (countFastAnswers(score.stats)) {
+      html += extraTemplate(`Бонус за скорость`, countFastAnswers(score.stats), 50);
     }
     if (!this.isDead(score)) {
       html += extraTemplate(`Бонус за жизни`, score.lives, 50);
     }
-    if (slowAnswersCount(score.stats)) {
-      html += extraTemplate(`Штраф за медлительность`, slowAnswersCount(score.stats), -50);
+    if (countSlowAnswers(score.stats)) {
+      html += extraTemplate(`Штраф за медлительность`, countSlowAnswers(score.stats), -50);
     }
     return html;
   }

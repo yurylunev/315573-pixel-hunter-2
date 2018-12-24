@@ -1,8 +1,8 @@
-const ratio = (width, height) => height / width;
+const ration = (width, height) => height / width;
 
 const getSizes = (containerWidth, containerHeight, imageWidth, imageHeight) => {
-  const containerRatio = ratio(containerWidth, containerHeight);
-  const imageRatio = ratio(imageWidth, imageHeight);
+  const containerRatio = ration(containerWidth, containerHeight);
+  const imageRatio = ration(imageWidth, imageHeight);
   let width;
   let height;
   if (containerRatio > imageRatio) {

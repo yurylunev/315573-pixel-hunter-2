@@ -14,7 +14,7 @@ const changeTimer = (state, timer) => {
 const tick = (state) => {
   return changeTimer(state, state.timer - 1);
 };
-const warningTimer = (state) => {
+const isWarningTimer = (state) => {
   return state.timer <= 5;
 };
 const isTimerOff = (state) => {
@@ -22,4 +22,4 @@ const isTimerOff = (state) => {
 };
 const resetTimer = (state) => Object.freeze(Object.assign({}, state, {timer: MAX_TIME}));
 
-export {changeTimer, tick, warningTimer, isTimerOff, resetTimer, MAX_TIME};
+export {changeTimer, tick, isWarningTimer, isTimerOff, resetTimer, MAX_TIME};
