@@ -1,9 +1,7 @@
 import {adaptServerData} from './data/data-adapter';
+import {DEFAULT_NAME, APP_ID} from "./data/game-settings";
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter/`;
-
-const DEFAULT_NAME = `xaLT`;
-const APP_ID = 198407023;
 
 class Loader {
   static async loadData() {

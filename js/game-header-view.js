@@ -1,4 +1,5 @@
 import AbstractView from "./abstract-view";
+import {MAX_LIVES} from "./data/game-settings";
 
 const getElementFromTemplate = (template) => {
   const element = document.createElement(`div`);
@@ -35,7 +36,6 @@ class GameHeaderView extends AbstractView {
   }
 
   get _getLivesTemplate() {
-    const MAX_LIVES = 3;
     let html = ``;
     for (let i = MAX_LIVES; i > 0; i--) {
       html += (this.lives < i)
