@@ -27,7 +27,7 @@ class GameHeaderView extends AbstractView {
       </svg>
     </button>
     ${this._timerTemplate}
-    ${this._getLivesTemplate}
+    ${this._livesTemplate}
   </header>`;
   }
 
@@ -35,7 +35,7 @@ class GameHeaderView extends AbstractView {
     return `<div class="game__timer${this.blink ? ` blink` : ``}">${(this.timer !== null) ? this.timer : ``}</div>`;
   }
 
-  get _getLivesTemplate() {
+  get _livesTemplate() {
     let html = ``;
     for (let i = MAX_LIVES; i > 0; i--) {
       html += (this.lives < i)
@@ -49,7 +49,7 @@ class GameHeaderView extends AbstractView {
     const updateElement = ROOT_ELEMENT.querySelector(`header`);
     if (updateElement) {
       const lives = updateElement.querySelector(`.game__lives`);
-      updateElement.replaceChild(getElementFromTemplate(this._getLivesTemplate), lives);
+      updateElement.replaceChild(getElementFromTemplate(this._livesTemplate), lives);
     }
   }
 
