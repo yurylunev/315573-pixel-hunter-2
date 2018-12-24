@@ -17,8 +17,8 @@ class StatsView extends AbstractView {
   }
 
   _getResult(score, index) {
-    if (isDead(score)) {
-      return `<table class="result__table">
+    return isDead(score) ?
+      `<table class="result__table">
       <tr>
         <td class="result__number">${index}.</td>
         <td>
@@ -27,9 +27,8 @@ class StatsView extends AbstractView {
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>
       </tr>
-    </table>`;
-    } else {
-      return `<table class="result__table">
+    </table>` :
+      `<table class="result__table">
       <tr>
         <td class="result__number">${index}.</td>
         <td colspan="2">
@@ -43,7 +42,6 @@ class StatsView extends AbstractView {
         <td colspan="5" class="result__total  result__total--final">${countScore(score.stats, score.lives)}</td>
       </tr>
     </table>`;
-    }
   }
 
   _getExtras(score) {

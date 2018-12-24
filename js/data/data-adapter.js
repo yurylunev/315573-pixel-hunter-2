@@ -3,16 +3,13 @@ const ration = (width, height) => height / width;
 const getSizes = (containerWidth, containerHeight, imageWidth, imageHeight) => {
   const containerRatio = ration(containerWidth, containerHeight);
   const imageRatio = ration(imageWidth, imageHeight);
-  let width;
-  let height;
-  if (containerRatio > imageRatio) {
-    width = containerWidth;
-    height = Math.round(imageHeight * containerWidth / imageWidth);
-  } else {
-    width = Math.round(imageWidth * containerHeight / imageHeight);
-    height = containerHeight;
-  }
-  return ({width, height});
+  return ((containerRatio > imageRatio) ? {
+    width: containerWidth,
+    height: Math.round(imageRatio * containerWidth)
+  } : {
+    width: Math.round(containerHeight / imageRatio),
+    height: containerHeight
+  });
 };
 
 const loadImage = (url) => {

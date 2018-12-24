@@ -8,12 +8,7 @@ const changeLives = (game, lives) => {
   return Object.freeze(Object.assign({}, game, {lives}));
 };
 
-const decreaseLives = (game) => {
-  if (isDead(game)) {
-    return Object.freeze(game);
-  }
-  return changeLives(game, game.lives - 1);
-};
+const decreaseLives = (game) => (isDead(game)) ? Object.freeze(game) : changeLives(game, game.lives - 1);
 
 const isDead = (game) => (game.lives === -1);
 
