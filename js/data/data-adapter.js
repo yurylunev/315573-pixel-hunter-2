@@ -15,18 +15,34 @@ const getSizes = (containerWidth, containerHeight, imageWidth, imageHeight) => {
   return ({width, height});
 };
 
-const adaptServerData = (questions, images) => {
-  const result = [];
+const loadImage = (url) => {
+  return new Promise((onLoad, onError) => {
+    const image = new Image();
+    image.onload = () => onLoad(image);
+    image.onerror = () => onError(`Не удалось загрузить картнку: ${url}`);
+    image.src = url;
+  });
+};
+
+async function adaptServerData(questionsFromServer) {
+  const adaptedData = [];
+  const images = [];
+  const questions = await questionsFromServer;
   let i = 0;
   for (const level of questions) {
-    result.push(level.answers.map((answer) => {
+    for (const answer of level.answers) {
+      images.push(await loadImage(answer.image.url));
+    }
+  }
+  for (const level of questions) {
+    adaptedData.push(level.answers.map((answer) => {
       return {
         image: Object.assign({}, {url: answer.image.url}, getSizes(answer.image.width, answer.image.height, images[i].width, images[i++].height)),
         rightAnswer: answer.type.slice(0, 5)
       };
     }));
   }
-  return result;
-};
+  return adaptedData;
+}
 
 export {adaptServerData};

@@ -1,5 +1,3 @@
-import {adaptServerData} from "./data-adapter";
-
 const testQuestions = [
   [
     {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
@@ -43,10 +41,10 @@ const testQuestions = [
   ]
 ];
 
-const getQuestions = (game, questionsFromServer, loadedImages) => {
+const getQuestions = (game, questions) => {
   return Object.freeze(Object.assign({}, game, {
-    questions: adaptServerData(questionsFromServer, loadedImages),
-    answers: Array(questionsFromServer.length).fill(`unknown`)
+    questions,
+    answers: Array(questions.length).fill(`unknown`)
   }));
 };
 

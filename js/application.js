@@ -8,37 +8,19 @@ import ConfirmScreen from './confirm-screen';
 import GameModel from './game-model';
 import Loader from './loader';
 
-const loadImage = (url) => {
-  return new Promise((onLoad, onError) => {
-    const image = new Image();
-    image.onload = () => onLoad(image);
-    image.onerror = () => onError(`Не удалось загрузить картнку: ${url}`);
-    image.src = url;
-  });
-};
-
 let questions;
-let loadedImages;
 
 class Application {
   static async loadIntro() {
     const intro = new IntroScreen(() => Application.showGreeting());
     intro.render();
     try {
-      const imagesURLs = [];
-      const response = await fetch(`https://es.dump.academy/pixel-hunter/questions`);
-      questions = await response.json();
-      for (const level of questions) {
-        for (const answer of level.answers) {
-          imagesURLs.push(loadImage(answer.image.url));
-        }
-      }
-      loadedImages = await Promise.all(imagesURLs);
+      questions = await Loader.loadData();
+      setTimeout(() => Application.showGreeting(), 1000);
     } catch (e) {
       Application.showError(new Error(`${e.status}: ${e.statusText}`));
     } finally {
       intro.fadeout();
-      setTimeout(() => Application.showGreeting(), 1000);
     }
   }
 
@@ -57,7 +39,7 @@ class Application {
   }
 
   static showGame(userName) {
-    const model = new GameModel(userName, questions, loadedImages);
+    const model = new GameModel(userName, questions);
     const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showConfirm());
     gameScreen.startGame();
   }
