@@ -1,7 +1,8 @@
+import {ROOT_ELEMENT} from "./data/game-settings";
+
 class AbstractView {
   constructor(callback) {
     this.callback = callback;
-    this.root = document.querySelector(`#main`);
   }
 
   get template() {
@@ -15,9 +16,9 @@ class AbstractView {
   }
 
   render() {
-    this.clean(this.root);
+    this.clean(ROOT_ELEMENT);
     this.elemInstance = this.element;
-    this.root.appendChild(this.elemInstance);
+    ROOT_ELEMENT.appendChild(this.elemInstance);
   }
 
   bind() {

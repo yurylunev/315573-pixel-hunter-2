@@ -1,4 +1,5 @@
 import AbstractView from "./abstract-view";
+import {ROOT_ELEMENT} from "./data/game-settings";
 
 class GreetingView extends AbstractView {
   get template() {
@@ -29,8 +30,8 @@ class GreetingView extends AbstractView {
   }
 
   render() {
-    this.root.innerHTML = ``;
-    this.root.appendChild(this.element);
+    ROOT_ELEMENT.innerHTML = ``;
+    ROOT_ELEMENT.appendChild(this.element);
   }
 }
 
