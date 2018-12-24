@@ -16,7 +16,7 @@ const getSizes = (containerWidth, containerHeight, imageWidth, imageHeight) => {
 };
 
 const adaptServerData = (questions, images) => {
-  let result = [];
+  const result = [];
   let i = 0;
   for (const level of questions) {
     result.push(level.answers.map((answer) => {

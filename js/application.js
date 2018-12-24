@@ -25,7 +25,7 @@ class Application {
     const intro = new IntroScreen(() => Application.showGreeting());
     intro.render();
     try {
-      let imagesURLs = [];
+      const imagesURLs = [];
       const response = await fetch(`https://es.dump.academy/pixel-hunter/questions`);
       questions = await response.json();
       for (const level of questions) {

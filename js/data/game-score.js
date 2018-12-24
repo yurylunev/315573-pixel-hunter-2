@@ -30,7 +30,7 @@ const countScore = (answers, lives) => {
     return -1;
   }
   let score = 0;
-  for (let answer of answers) {
+  for (const answer of answers) {
     switch (answer) {
       case `fast`:
         score += 150;

@@ -37,7 +37,7 @@ export default class Game1View extends AbstractView {
         label.querySelector(`span`).style.cssText = DEBUG_STYLE;
       }
       label.control.addEventListener(`click`, () => {
-        let checkedAnswers = [];
+        const checkedAnswers = [];
         answers.forEach((answer) => {
           if (answer.control.checked) {
             checkedAnswers.push(answer);
