@@ -12,15 +12,13 @@ const changeTimer = (state, timer) => {
   }
   return Object.freeze(Object.assign({}, state, {timer}));
 };
-const tick = (state) => {
-  return changeTimer(state, state.timer - 1);
-};
-const isWarningTimer = (state) => {
-  return state.timer <= WARNING_TIME;
-};
-const isTimerOff = (state) => {
-  return state.timer <= 0;
-};
+
+const tick = (state) => changeTimer(state, state.timer - 1);
+
+const isWarningTimer = (state) => state.timer <= WARNING_TIME;
+
+const isTimerOff = (state) => state.timer <= 0;
+
 const resetTimer = (state) => Object.freeze(Object.assign({}, state, {timer: MAX_TIME}));
 
 export {changeTimer, tick, isWarningTimer, isTimerOff, resetTimer};

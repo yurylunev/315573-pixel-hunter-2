@@ -1,4 +1,5 @@
 import {ROOT_ELEMENT} from "./data/game-settings";
+const rootElement = document.querySelector(ROOT_ELEMENT);
 
 class AbstractView {
   constructor(callback) {
@@ -16,9 +17,9 @@ class AbstractView {
   }
 
   render() {
-    this.clean(ROOT_ELEMENT);
+    this.clean(rootElement);
     this.elemInstance = this.element;
-    ROOT_ELEMENT.appendChild(this.elemInstance);
+    rootElement.appendChild(this.elemInstance);
   }
 
   bind() {

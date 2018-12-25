@@ -9,7 +9,7 @@ const LIVE_SCORE = 50;
 const MAX_LIVES = 3;
 const DEFAULT_NAME = `xaLT`;
 const APP_ID = 198407023;
-const ROOT_ELEMENT = document.querySelector(`#main`);
+const ROOT_ELEMENT = `#main`;
 
 export {
   MAX_TIME,

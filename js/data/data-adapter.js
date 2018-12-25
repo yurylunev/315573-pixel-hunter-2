@@ -12,14 +12,12 @@ const getSizes = (containerWidth, containerHeight, imageWidth, imageHeight) => {
   });
 };
 
-const loadImage = (url) => {
-  return new Promise((onLoad, onError) => {
-    const image = new Image();
-    image.addEventListener(`load`, () => onLoad(image));
-    image.addEventListener(`error`, () => onError(`Не удалось загрузить картнку: ${url}`));
-    image.src = url;
-  });
-};
+const loadImage = (url) => new Promise((onLoad, onError) => {
+  const image = new Image();
+  image.addEventListener(`load`, () => onLoad(image));
+  image.addEventListener(`error`, () => onError(`Не удалось загрузить картнку: ${url}`));
+  image.src = url;
+});
 
 async function adaptServerData(questionsFromServer) {
   const adaptedData = [];

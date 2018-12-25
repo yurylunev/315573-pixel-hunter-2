@@ -1,19 +1,61 @@
 import {assert} from "chai";
 import {addAnswer, countScore} from "./game-score";
 import {INITIAL_GAME} from "./game-data";
-import {getTestQuestions} from "./game-questions";
 
+const testQuestions = [
+  [
+    {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
+    {image: `https://k42.kn3.net/CF42609C8.jpg`, rightAnswer: `paint`}
+  ],
+  [
+    {image: `https://k42.kn3.net/D2F0370D6.jpg`, rightAnswer: `paint`}
+  ],
+  [
+    {image: `https://k32.kn3.net/5C7060EC5.jpg`, rightAnswer: `paint`},
+    {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
+    {image: `http://i.imgur.com/DKR1HtB.jpg`, rightAnswer: `photo`}
+  ],
+  [
+    {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
+    {image: `https://k42.kn3.net/CF42609C8.jpg`, rightAnswer: `paint`}
+  ],
+  [
+    {image: `https://k42.kn3.net/D2F0370D6.jpg`, rightAnswer: `paint`}
+  ],
+  [
+    {image: `https://k32.kn3.net/5C7060EC5.jpg`, rightAnswer: `paint`},
+    {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
+    {image: `http://i.imgur.com/DKR1HtB.jpg`, rightAnswer: `photo`}
+  ],
+  [
+    {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
+    {image: `https://k42.kn3.net/CF42609C8.jpg`, rightAnswer: `paint`}
+  ],
+  [
+    {image: `https://k42.kn3.net/D2F0370D6.jpg`, rightAnswer: `paint`}
+  ],
+  [
+    {image: `https://k32.kn3.net/5C7060EC5.jpg`, rightAnswer: `paint`},
+    {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
+    {image: `http://i.imgur.com/DKR1HtB.jpg`, rightAnswer: `photo`}
+  ],
+  [
+    {image: `http://i.imgur.com/1KegWPz.jpg`, rightAnswer: `photo`},
+    {image: `https://k42.kn3.net/CF42609C8.jpg`, rightAnswer: `paint`}
+  ]
+];
 const ANSWERS_LESS_10 = [`wrong`, `correct`, `fast`, `wrong`, `wrong`, `wrong`];
 const ANSWERS_CORRECT = [`correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`];
 const ANSWERS_FAST = [`fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`];
 const ANSWERS_SLOW = [`wrong`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `wrong`, `slow`, `wrong`];
 const ANSWERS_1000 = [`wrong`, `correct`, `fast`, `fast`, `slow`, `fast`, `fast`, `slow`, `fast`, `wrong`];
 
-const generateState = (answers) => {
-  let state = getTestQuestions(INITIAL_GAME);
-  state = Object.assign({}, state, {answers});
-  return Object.freeze(state);
-};
+const getTestQuestions = (game) => Object.freeze(Object.assign({}, game, {
+  questions: testQuestions,
+  answers: []
+}));
+
+const generateState = (answers) => Object.freeze(Object.assign({}, getTestQuestions(INITIAL_GAME), {answers}));
 
 describe(`Check count score`, () => {
 
