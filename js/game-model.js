@@ -36,6 +36,10 @@ class GameModel {
     return isWarningTimer(this._state);
   }
 
+  set _timer(timerID) {
+    this.timerID = timerID;
+  }
+
   isFinalQuestion() {
     return isFinalQuestion(this._state);
   }
@@ -56,6 +60,10 @@ class GameModel {
 
   tick() {
     this._state = tick(this._state);
+  }
+
+  stopTick() {
+    clearTimeout(this.timerID);
   }
 
   isDead() {

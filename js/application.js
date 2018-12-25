@@ -30,7 +30,7 @@ class Application {
 
   static showGreeting() {
     const greeting = new GreetingScreen(() => Application.showRules());
-    greeting.render();
+    greeting.render(false);
   }
 
   static showRules() {
@@ -40,7 +40,7 @@ class Application {
 
   static showGame(userName) {
     const model = new GameModel(userName, questions);
-    const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showConfirm());
+    const gameScreen = new GameScreen(model, () => Application.showStats(model), () => Application.showConfirm(model));
     gameScreen.startGame();
   }
 
@@ -64,8 +64,11 @@ class Application {
     errorScreen.render();
   }
 
-  static showConfirm() {
-    const confirm = new ConfirmScreen(() => Application.showGreeting());
+  static showConfirm(model) {
+    const confirm = new ConfirmScreen(() => {
+      model.stopTick();
+      Application.showGreeting();
+    });
     confirm.show();
   }
 }

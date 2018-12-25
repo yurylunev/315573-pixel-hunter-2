@@ -34,10 +34,12 @@ class GameScreen {
   }
 
   _startTimer() {
-    this._timer = setTimeout(() => this._timerTick(), 1000);
+    this.model._timer = setTimeout(() => this._timerTick(), 1000);
   }
 
   _timerTick() {
+    const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer, this.model.warningTimer);
+    gameHeader.updateTimer();
     if (this.model.isTimerOff) {
       this._gameTick(false);
       if (!this.model.isDead()) {
@@ -45,14 +47,12 @@ class GameScreen {
       }
     } else {
       this.model.tick();
-      const gameHeader = new GameHeaderView(this.onFirstScreen, this.model.lives, this.model.timer, this.model.warningTimer);
-      gameHeader.updateTimer();
       this._startTimer();
     }
   }
 
   stopGame() {
-    clearInterval(this._timer);
+    this.model.stopTick();
     this.onLastScreen(this.model.answers, this.model.lives);
   }
 

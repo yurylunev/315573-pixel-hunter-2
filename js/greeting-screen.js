@@ -5,9 +5,9 @@ class GreetingScreen {
     this.onNextScreen = onNextScreen;
   }
 
-  render() {
+  render(update) {
     const greeting = new GreetingView(this.onNextScreen);
-    return greeting.render();
+    return greeting.render(update);
   }
 }
 
