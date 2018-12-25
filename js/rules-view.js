@@ -25,11 +25,9 @@ class RulesView extends AbstractView {
     const rulesFormInput = element.querySelector(`.rules__input`);
     const rulesFormButton = element.querySelector(`.rules__button`);
 
-    rulesFormInput.addEventListener(`keyup`, () =>
-      (rulesFormInput.value) ?
-        rulesFormButton.removeAttribute(`disabled`) :
-        rulesFormButton.setAttribute(`disabled`, `true`)
-    );
+    rulesFormInput.addEventListener(`keyup`, () => {
+      rulesFormButton.disabled = !rulesFormInput.value;
+    });
   }
 }
 
