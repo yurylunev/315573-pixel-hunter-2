@@ -1,4 +1,6 @@
 import AbstractView from "./abstract-view";
+import {MAX_LIVES, ROOT_ELEMENT} from "./data/game-settings";
+const rootElement = document.querySelector(ROOT_ELEMENT);
 
 const getElementFromTemplate = (template) => {
   const element = document.createElement(`div`);
@@ -14,21 +16,6 @@ class GameHeaderView extends AbstractView {
     this.blink = blink;
   }
 
-  get _timerTemplate() {
-    return `<div class="game__timer${this.blink ? ` blink` : ``}">${(this.timer !== null) ? this.timer : ``}</div>`;
-  }
-
-  get _getLivesTemplate() {
-    const MAX_LIVES = 3;
-    let html = ``;
-    for (let i = MAX_LIVES; i > 0; i--) {
-      html += (this.lives < i)
-        ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
-        : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
-    }
-    return `<div class="game__lives">${(this.lives !== null) ? html : ``}</div>`;
-  }
-
   get template() {
     return `  <header class="header">
     <button class="back">
@@ -41,12 +28,38 @@ class GameHeaderView extends AbstractView {
       </svg>
     </button>
     ${this._timerTemplate}
-    ${this._getLivesTemplate}
+    ${this._livesTemplate}
   </header>`;
   }
 
-  bind(element, callback) {
-    element.querySelector(`.back`).addEventListener(`click`, callback);
+  get _timerTemplate() {
+    return `<div class="game__timer${this.blink ? ` blink` : ``}">${(this.timer !== null) ? this.timer : ``}</div>`;
+  }
+
+  get _livesTemplate() {
+    let html = ``;
+    for (let i = MAX_LIVES; i > 0; i--) {
+      html += (this.lives < i)
+        ? `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`
+        : `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`;
+    }
+    return `<div class="game__lives">${(this.lives !== null) ? html : ``}</div>`;
+  }
+
+  updateLives() {
+    const updateElement = rootElement.querySelector(`header`);
+    if (updateElement) {
+      const lives = updateElement.querySelector(`.game__lives`);
+      updateElement.replaceChild(getElementFromTemplate(this._livesTemplate), lives);
+    }
+  }
+
+  updateTimer() {
+    const updateElement = rootElement.querySelector(`header`);
+    if (updateElement) {
+      const timer = updateElement.querySelector(`.game__timer`);
+      updateElement.replaceChild(getElementFromTemplate(this._timerTemplate), timer);
+    }
   }
 
   clean(element) {
@@ -56,20 +69,8 @@ class GameHeaderView extends AbstractView {
     }
   }
 
-  updateTimer() {
-    const updateElement = this.root.querySelector(`header`);
-    if (updateElement) {
-      const timer = updateElement.querySelector(`.game__timer`);
-      updateElement.replaceChild(getElementFromTemplate(this._timerTemplate), timer);
-    }
-  }
-
-  updateLives() {
-    const updateElement = this.root.querySelector(`header`);
-    if (updateElement) {
-      const lives = updateElement.querySelector(`.game__lives`);
-      updateElement.replaceChild(getElementFromTemplate(this._getLivesTemplate), lives);
-    }
+  bind(element, callback) {
+    element.querySelector(`.back`).addEventListener(`click`, callback);
   }
 }
 

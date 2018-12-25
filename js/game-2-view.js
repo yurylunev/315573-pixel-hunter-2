@@ -1,8 +1,8 @@
 import AbstractView from "./abstract-view";
 import getStatusBar from "./answers-status";
-import {DEBUG, DEBUG_STYLE} from "./settings";
+import {DEBUG, DEBUG_STYLE} from "./data/debug-settings";
 
-export default class Game2View extends AbstractView {
+class Game2View extends AbstractView {
   constructor(callback, question, answers) {
     super(callback);
     this.question = question;
@@ -11,10 +11,10 @@ export default class Game2View extends AbstractView {
 
   get template() {
     return `  <section class="game">
-    <p class="game__task">Угадай, фото или рисунок?</p>
+    <p class="game__task">${this.question.text}</p>
     <form class="game__content  game__content--wide">
       <div class="game__option">
-        <img src="${this.question[0].image.url}" alt="Option 1" width="${this.question[0].image.width}" height="${this.question[0].image.height}">
+        <img src="${this.question.images[0].url}" alt="Option 1" width="${this.question.images[0].width}" height="${this.question.images[0].height}">
         <label class="game__answer  game__answer--photo">
           <input class="visually-hidden" name="question1" type="radio" value="photo">
           <span>Фото</span>
@@ -31,7 +31,7 @@ export default class Game2View extends AbstractView {
 
   bind(element, callback) {
     element.querySelectorAll(`.game__answer`).forEach((answer) => {
-      const isCorrect = this.question[0].rightAnswer === answer.control.value;
+      const isCorrect = this.question.images[0].rightAnswer === answer.control.value;
       if (DEBUG && isCorrect) {
         answer.querySelector(`span`).style.cssText = DEBUG_STYLE;
       }
@@ -39,3 +39,5 @@ export default class Game2View extends AbstractView {
     });
   }
 }
+
+export default Game2View;

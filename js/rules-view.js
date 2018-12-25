@@ -1,6 +1,6 @@
 import AbstractView from "./abstract-view";
 
-export default class RulesView extends AbstractView {
+class RulesView extends AbstractView {
   get template() {
     return `  <section class="rules">
     <h2 class="rules__title">Правила</h2>
@@ -25,12 +25,12 @@ export default class RulesView extends AbstractView {
     const rulesFormInput = element.querySelector(`.rules__input`);
     const rulesFormButton = element.querySelector(`.rules__button`);
 
-    rulesFormInput.addEventListener(`keyup`, () => {
-      if (rulesFormInput.value) {
-        rulesFormButton.removeAttribute(`disabled`);
-      } else {
-        rulesFormButton.setAttribute(`disabled`, `true`);
-      }
-    });
+    rulesFormInput.addEventListener(`keyup`, () =>
+      (rulesFormInput.value) ?
+        rulesFormButton.removeAttribute(`disabled`) :
+        rulesFormButton.setAttribute(`disabled`, `true`)
+    );
   }
 }
+
+export default RulesView;

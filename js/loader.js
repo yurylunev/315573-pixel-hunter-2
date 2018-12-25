@@ -1,26 +1,12 @@
 import {adaptServerData} from './data/data-adapter';
+import {DEFAULT_NAME, APP_ID} from "./data/game-settings";
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter/`;
 
-const DEFAULT_NAME = `xaLT`;
-const APP_ID = 198407023;
-
-const checkStatus = (response) => {
-  if (response.ok) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
-};
-
-const toJSON = (res) => res.json();
-
 class Loader {
-  static loadData() {
-    return fetch(`${SERVER_URL}/questions`)
-      .then(checkStatus)
-      .then(toJSON)
-      .then(adaptServerData);
+  static async loadData() {
+    const response = await fetch(`${SERVER_URL}/questions`);
+    return adaptServerData(response.json());
   }
 
   static async loadResults(name = DEFAULT_NAME) {

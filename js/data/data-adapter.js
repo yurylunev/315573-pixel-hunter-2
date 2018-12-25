@@ -1,32 +1,42 @@
-const ratio = (width, height) => height / width;
+const ration = (width, height) => height / width;
 
 const getSizes = (containerWidth, containerHeight, imageWidth, imageHeight) => {
-  const containerRatio = ratio(containerWidth, containerHeight);
-  const imageRatio = ratio(imageWidth, imageHeight);
-  let width;
-  let height;
-  if (containerRatio > imageRatio) {
-    width = containerWidth;
-    height = Math.round(imageHeight * containerWidth / imageWidth);
-  } else {
-    width = Math.round(imageWidth * containerHeight / imageHeight);
-    height = containerHeight;
-  }
-  return ({width, height});
+  const containerRatio = ration(containerWidth, containerHeight);
+  const imageRatio = ration(imageWidth, imageHeight);
+  return ((containerRatio > imageRatio) ? {
+    width: containerWidth,
+    height: Math.round(imageRatio * containerWidth)
+  } : {
+    width: Math.round(containerHeight / imageRatio),
+    height: containerHeight
+  });
 };
 
-const adaptServerData = (questions, images) => {
-  let result = [];
+const loadImage = (url) => new Promise((onLoad, onError) => {
+  const image = new Image();
+  image.addEventListener(`load`, () => onLoad(image));
+  image.addEventListener(`error`, () => onError(`Не удалось загрузить картнку: ${url}`));
+  image.src = url;
+});
+
+async function adaptServerData(questionsFromServer) {
+  const adaptedData = [];
+  const images = [];
+  const questions = await questionsFromServer;
   let i = 0;
   for (const level of questions) {
-    result.push(level.answers.map((answer) => {
-      return {
-        image: Object.assign({}, {url: answer.image.url}, getSizes(answer.image.width, answer.image.height, images[i].width, images[i++].height)),
-        rightAnswer: answer.type.slice(0, 5)
-      };
-    }));
+    for (const answer of level.answers) {
+      images.push(await loadImage(answer.image.url));
+    }
   }
-  return result;
-};
+  for (const level of questions) {
+    adaptedData.push({
+      text: level.question,
+      images:
+        level.answers.map((answer) => Object.assign({}, {url: answer.image.url}, getSizes(answer.image.width, answer.image.height, images[i].width, images[i++].height), {rightAnswer: answer.type.slice(0, 5)}))
+    });
+  }
+  return adaptedData;
+}
 
 export {adaptServerData};

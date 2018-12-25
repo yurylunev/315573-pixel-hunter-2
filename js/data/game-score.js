@@ -1,10 +1,10 @@
-import {MAX_TIME} from './game-timer';
+import {MAX_TIME, FAST_TIME, SLOW_TIME, FAST_SCORE, CORRECT_SCORE, SLOW_SCORE, LIVE_SCORE} from "./game-settings";
 
 const getAnswerWithTime = (time, answer) => {
   if (answer) {
-    if (time > MAX_TIME - 10) {
+    if (FAST_TIME > MAX_TIME - time) {
       return `fast`;
-    } else if (time < MAX_TIME - 20) {
+    } else if (SLOW_TIME < MAX_TIME - time) {
       return `slow`;
     }
     return `correct`;
@@ -19,31 +19,31 @@ const addAnswer = (game, answer) => {
   throw new Error(`Incorrect answer value: ${answer}`);
 };
 
-const rightAnswersCount = (answers) => answers.filter((answer) => (answer !== `wrong`)).length;
+const countRightAnswers = (answers) => answers.filter((answer) => (answer !== `wrong`)).length;
 
-const fastAnswersCount = (answers) => answers.filter((answer) => (answer === `fast`)).length;
+const countFastAnswers = (answers) => answers.filter((answer) => (answer === `fast`)).length;
 
-const slowAnswersCount = (answers) => answers.filter((answer) => (answer === `slow`)).length;
+const countSlowAnswers = (answers) => answers.filter((answer) => (answer === `slow`)).length;
 
 const countScore = (answers, lives) => {
   if (lives < 0) {
     return -1;
   }
   let score = 0;
-  for (let answer of answers) {
+  for (const answer of answers) {
     switch (answer) {
       case `fast`:
-        score += 150;
+        score += FAST_SCORE;
         break;
       case `correct`:
-        score += 100;
+        score += CORRECT_SCORE;
         break;
       case `slow`:
-        score += 50;
+        score += SLOW_SCORE;
         break;
     }
   }
-  return score + lives * 50;
+  return score + lives * LIVE_SCORE;
 };
 
-export {addAnswer, countScore, rightAnswersCount, fastAnswersCount, slowAnswersCount};
+export {addAnswer, countScore, countRightAnswers, countFastAnswers, countSlowAnswers};

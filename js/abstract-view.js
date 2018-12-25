@@ -1,7 +1,9 @@
-export default class AbstractView {
+import {ROOT_ELEMENT} from "./data/game-settings";
+const rootElement = document.querySelector(ROOT_ELEMENT);
+
+class AbstractView {
   constructor(callback) {
     this.callback = callback;
-    this.root = document.querySelector(`#main`);
   }
 
   get template() {
@@ -15,9 +17,9 @@ export default class AbstractView {
   }
 
   render() {
-    this.clean(this.root);
+    this.clean(rootElement);
     this.elemInstance = this.element;
-    this.root.appendChild(this.elemInstance);
+    rootElement.appendChild(this.elemInstance);
   }
 
   bind() {
@@ -34,3 +36,5 @@ export default class AbstractView {
     }
   }
 }
+
+export default AbstractView;

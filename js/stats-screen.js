@@ -9,7 +9,7 @@ class StatsScreen {
 
   showScores() {
     const stats = new StatsView(this.data);
-    const header = new GameHeaderView(this.onBackButton, this.lives);
+    const header = new GameHeaderView(this.onBackButton);
     header.render();
     stats.render();
   }

@@ -1,6 +1,6 @@
 import {assert} from "chai";
 import {INITIAL_GAME} from "./game-data";
-import {changeTimer, isTimerOff, tick, warningTimer} from "./game-timer";
+import {changeTimer, isTimerOff, tick, isWarningTimer} from "./game-timer";
 
 describe(`Check time changer`, () => {
 
@@ -26,11 +26,11 @@ describe(`Check time changer`, () => {
   });
 
   it(`Function warningTime should return true`, () => {
-    assert.isTrue(warningTimer(changeTimer(INITIAL_GAME, 5)));
+    assert.isTrue(isWarningTimer(changeTimer(INITIAL_GAME, 5)));
   });
 
   it(`Function warningTime should return false`, () => {
-    assert.isFalse(warningTimer(changeTimer(INITIAL_GAME, 6)));
+    assert.isFalse(isWarningTimer(changeTimer(INITIAL_GAME, 6)));
   });
 
   it(`Function isTimeOff should return true`, () => {

@@ -11,7 +11,7 @@ class GameScreen {
   }
 
   gameView() {
-    return new [Game2View, Game1View, Game3View][this.model.currentQuestion.length - 1]((answer) =>
+    return new [Game2View, Game1View, Game3View][this.model.currentQuestion.images.length - 1]((answer) =>
       this._gameTick(answer), this.model.currentQuestion, this.model.answers);
   }
 

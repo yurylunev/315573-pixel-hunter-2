@@ -1,4 +1,5 @@
-const MAX_TIME = 30;
+import {MAX_TIME, WARNING_TIME} from "./game-settings";
+
 const changeTimer = (state, timer) => {
   if (typeof timer !== `number`) {
     throw new Error(`Time should be of type number: ${typeof timer}`);
@@ -11,15 +12,13 @@ const changeTimer = (state, timer) => {
   }
   return Object.freeze(Object.assign({}, state, {timer}));
 };
-const tick = (state) => {
-  return changeTimer(state, state.timer - 1);
-};
-const warningTimer = (state) => {
-  return state.timer <= 5;
-};
-const isTimerOff = (state) => {
-  return state.timer <= 0;
-};
+
+const tick = (state) => changeTimer(state, state.timer - 1);
+
+const isWarningTimer = (state) => state.timer <= WARNING_TIME;
+
+const isTimerOff = (state) => state.timer <= 0;
+
 const resetTimer = (state) => Object.freeze(Object.assign({}, state, {timer: MAX_TIME}));
 
-export {changeTimer, tick, warningTimer, isTimerOff, resetTimer, MAX_TIME};
+export {changeTimer, tick, isWarningTimer, isTimerOff, resetTimer};
