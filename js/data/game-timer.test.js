@@ -1,5 +1,5 @@
 import {assert} from "chai";
-import {INITIAL_GAME} from "./game-data";
+import {INITIAL_GAME} from "../utils/game-data";
 import {changeTimer, isTimerOff, tick, isWarningTimer} from "./game-timer";
 
 describe(`Check time changer`, () => {

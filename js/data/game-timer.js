@@ -1,4 +1,4 @@
-import {MAX_TIME, WARNING_TIME} from "./game-settings";
+import {MAX_TIME, WARNING_TIME} from "../utils/game-settings";
 
 const changeTimer = (state, timer) => {
   if (typeof timer !== `number`) {

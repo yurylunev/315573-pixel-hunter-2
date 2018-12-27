@@ -1,5 +1,5 @@
-import {adaptServerData} from './data/data-adapter';
-import {DEFAULT_NAME, APP_ID} from "./data/game-settings";
+import {adaptServerData} from './data-adapter';
+import {DEFAULT_NAME, APP_ID} from "./game-settings";
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter/`;
 

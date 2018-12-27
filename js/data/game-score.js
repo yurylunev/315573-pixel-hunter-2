@@ -1,4 +1,4 @@
-import {MAX_TIME, FAST_TIME, SLOW_TIME, FAST_SCORE, CORRECT_SCORE, SLOW_SCORE, LIVE_SCORE} from "./game-settings";
+import {MAX_TIME, FAST_TIME, SLOW_TIME, FAST_SCORE, CORRECT_SCORE, SLOW_SCORE, LIVE_SCORE} from "../utils/game-settings";
 
 const getAnswerWithTime = (time, answer) => {
   if (answer) {

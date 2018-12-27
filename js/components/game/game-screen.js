@@ -1,4 +1,4 @@
-import GameHeaderView from './game-header-view';
+import GameHeaderView from '../header/game-header-view';
 import Game2View from "./game-2-view";
 import Game1View from "./game-1-view";
 import Game3View from "./game-3-view";

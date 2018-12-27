@@ -1,4 +1,4 @@
-import {ROOT_ELEMENT} from "./data/game-settings";
+import {ROOT_ELEMENT} from "../utils/game-settings";
 
 const rootElement = document.querySelector(ROOT_ELEMENT);
 

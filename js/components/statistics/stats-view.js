@@ -1,7 +1,7 @@
-import AbstractView from "./abstract-view";
-import getStatusBar from "./answers-status";
-import {countScore, countFastAnswers, countRightAnswers, countSlowAnswers} from "./data/game-score";
-import {isDead} from "./data/game-lives";
+import AbstractView from "../abstract-view";
+import getStatusBar from "../game/answers-status";
+import {countScore, countFastAnswers, countRightAnswers, countSlowAnswers} from "../../data/game-score";
+import {isDead} from "../../data/game-lives";
 
 class StatsView extends AbstractView {
   constructor(data) {
