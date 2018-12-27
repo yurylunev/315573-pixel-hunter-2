@@ -1,5 +1,5 @@
 import StatsView from './stats-view';
-import GameHeaderView from './game-header-view';
+import GameHeaderView from '../header/game-header-view';
 
 class StatsScreen {
   constructor(onBackButton, data) {

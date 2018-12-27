@@ -1,9 +1,9 @@
-import {INITIAL_GAME} from "./data/game-data";
-import {isFinalQuestion, getNextLevel} from "./data/game-levels";
-import {getCurrentQuestion, getQuestions} from "./data/game-questions";
-import {decreaseLives, isDead} from "./data/game-lives";
-import {addAnswer} from "./data/game-score";
-import {isTimerOff, resetTimer, tick, isWarningTimer} from "./data/game-timer";
+import {INITIAL_GAME} from "../../utils/game-data";
+import {isFinalQuestion, getNextLevel} from "../../data/game-levels";
+import {getCurrentQuestion, getQuestions} from "../../data/game-questions";
+import {decreaseLives, isDead} from "../../data/game-lives";
+import {addAnswer} from "../../data/game-score";
+import {isTimerOff, resetTimer, tick, isWarningTimer} from "../../data/game-timer";
 
 class GameModel {
   constructor(playerName, questions) {

@@ -1,4 +1,4 @@
-import GameHeaderView from './game-header-view';
+import GameHeaderView from '../header/game-header-view';
 import RulesView from './rules-view';
 
 class RulesScreen {

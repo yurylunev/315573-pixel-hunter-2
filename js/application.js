@@ -1,12 +1,12 @@
-import IntroScreen from './intro-screen';
-import GreetingScreen from './greeting-screen';
-import RulesScreen from './rules-screen';
-import GameScreen from './game-screen';
-import StatsScreen from './stats-screen';
-import ErrorScreen from './error-screen';
-import ConfirmScreen from './confirm-screen';
-import GameModel from './game-model';
-import Loader from './loader';
+import IntroScreen from './components/intro/intro-screen';
+import GreetingScreen from './components/greeting/greeting-screen';
+import RulesScreen from './components/rules/rules-screen';
+import GameScreen from './components/game/game-screen';
+import StatsScreen from './components/statistics/stats-screen';
+import ErrorScreen from './components/error/error-screen';
+import ConfirmScreen from './components/confirm/confirm-screen';
+import GameModel from './components/game/game-model';
+import Loader from './utils/loader';
 
 let questions;
 

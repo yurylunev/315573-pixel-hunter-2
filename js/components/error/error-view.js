@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import AbstractView from '../abstract-view.js';
 
 class ErrorView extends AbstractView {
   constructor(error) {

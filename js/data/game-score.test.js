@@ -1,6 +1,6 @@
 import {assert} from "chai";
 import {addAnswer, countScore} from "./game-score";
-import {INITIAL_GAME} from "./game-data";
+import {INITIAL_GAME} from "../utils/game-data";
 
 const testQuestions = [
   [

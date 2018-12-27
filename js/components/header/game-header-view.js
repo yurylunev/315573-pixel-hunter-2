@@ -1,5 +1,5 @@
-import AbstractView from "./abstract-view";
-import {MAX_LIVES, ROOT_ELEMENT} from "./data/game-settings";
+import AbstractView from "../abstract-view";
+import {MAX_LIVES, ROOT_ELEMENT} from "../../utils/game-settings";
 const rootElement = document.querySelector(ROOT_ELEMENT);
 
 const getElementFromTemplate = (template) => {

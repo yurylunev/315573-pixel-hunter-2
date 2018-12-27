@@ -1,5 +1,5 @@
 import {assert} from "chai";
-import {INITIAL_GAME} from "./game-data";
+import {INITIAL_GAME} from "../utils/game-data";
 import {changeLives, decreaseLives, isDead} from "./game-lives";
 
 describe(`Check manipulations with lives`, () => {

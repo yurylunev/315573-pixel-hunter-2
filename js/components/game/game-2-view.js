@@ -1,6 +1,6 @@
-import AbstractView from "./abstract-view";
+import AbstractView from "../abstract-view";
 import getStatusBar from "./answers-status";
-import {DEBUG, DEBUG_STYLE} from "./data/debug-settings";
+import {DEBUG, DEBUG_STYLE} from "../../utils/debug-settings";
 
 class Game2View extends AbstractView {
   constructor(callback, question, answers) {
